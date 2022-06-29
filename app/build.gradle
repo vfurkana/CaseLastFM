@@ -21,6 +21,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "API_KEY", localProperties["lastFMApiKey"])
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -78,6 +83,14 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
+
+    // For storing & caching api responses in database so we can work offline.
+    implementation "androidx.room:room-runtime:2.4.2"
+    implementation "androidx.room:room-ktx:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
+    // We can benefit from paging on Database. Honestly, it's just to say "Hey! look I can use paging"
+//    implementation "androidx.paging:paging-runtime:3.1.1"
+//    implementation "androidx.room:room-paging:2.4.2"
 
     // Test Dependencies
     testImplementation 'junit:junit:4.13.2'

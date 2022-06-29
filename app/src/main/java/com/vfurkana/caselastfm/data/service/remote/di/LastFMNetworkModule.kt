@@ -1,7 +1,7 @@
 package com.vfurkana.caselastfm.data.service.remote.di
 
 import com.vfurkana.caselastfm.BuildConfig
-import com.vfurkana.caselastfm.data.service.remote.api.LastFMArtistAPI
+import com.vfurkana.caselastfm.data.service.remote.api.LastFMAPI
 import com.vfurkana.caselastfm.data.service.remote.interceptor.LastFMResponseTypeInterceptor
 import com.vfurkana.caselastfm.data.service.remote.interceptor.LastFMSecretInterceptor
 import dagger.Module
@@ -62,8 +62,8 @@ object LastFMNetworkModule {
 
     @Provides
     @Singleton
-    fun provideLastFMArtistService(retrofit: Retrofit): LastFMArtistAPI {
-        return retrofit.create(LastFMArtistAPI::class.java)
+    fun provideLastFMArtistService(retrofit: Retrofit): LastFMAPI {
+        return retrofit.create(LastFMAPI::class.java)
     }
 
     @Provides

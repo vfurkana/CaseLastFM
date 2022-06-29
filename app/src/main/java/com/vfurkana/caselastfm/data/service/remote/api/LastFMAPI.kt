@@ -1,11 +1,12 @@
 package com.vfurkana.caselastfm.data.service.remote.api
 
+import com.vfurkana.caselastfm.data.service.remote.model.LastFMAlbumInfoAPIResponseModel
 import com.vfurkana.caselastfm.data.service.remote.model.SearchAPIResponseModel
 import com.vfurkana.caselastfm.data.service.remote.model.TopAlbumsAPIResponseModel
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface LastFMArtistAPI {
+interface LastFMAPI {
 
     @GET("?method=artist.gettopalbums")
     suspend fun getTopAlbumsByArtist(
@@ -27,4 +28,12 @@ interface LastFMArtistAPI {
         @Query("page") page: Int = 1,
         @Query("limit") limit: Int = 25
     ): SearchAPIResponseModel
+
+    @GET("?method=album.getinfo")
+    suspend fun getAlbumInfo(
+        @Query("album") album: String,
+        @Query("artist") artist: String,
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 25
+    ): LastFMAlbumInfoAPIResponseModel
 }
