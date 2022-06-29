@@ -1,8 +1,9 @@
-package com.vfurkana.caselastfm.di
+package com.vfurkana.caselastfm.data.service.remote.di
 
-import android.view.View
 import com.vfurkana.caselastfm.BuildConfig
-import com.vfurkana.caselastfm.data.service.remote.LastFMArtistAPI
+import com.vfurkana.caselastfm.data.service.remote.api.LastFMArtistAPI
+import com.vfurkana.caselastfm.data.service.remote.interceptor.LastFMResponseTypeInterceptor
+import com.vfurkana.caselastfm.data.service.remote.interceptor.LastFMSecretInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,11 +29,13 @@ object LastFMNetworkModule {
     @Singleton
     fun provideOkHttpClient(
         @Named("loggingInterceptor") loggingInterceptor: HttpLoggingInterceptor,
-        @Named("secretInterceptor") secretInterceptor: Interceptor
+        @Named("lastFMSecretInterceptor") secretInterceptor: Interceptor,
+        @Named("lastFMResponseTypeInterceptor") responseTypeInterceptor: Interceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
             .addInterceptor(secretInterceptor)
+            .addInterceptor(responseTypeInterceptor)
+            .addInterceptor(loggingInterceptor)
             .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .callTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .build()
@@ -74,21 +77,16 @@ object LastFMNetworkModule {
 
     @Provides
     @Singleton
-    @Named("secretInterceptor")
-    fun provideSecretInterceptor(): Interceptor {
-        return Interceptor {
-            val request = it.request()
-            val url = request.url
-            val newRequest = request
-                .newBuilder()
-                .url(
-                    url.newBuilder()
-                        .addQueryParameter("api_key", BuildConfig.API_KEY)
-                        .build()
-                )
-                .build()
-            it.proceed(newRequest)
-        }
+    @Named("lastFMSecretInterceptor")
+    fun provideLastFMSecretInterceptor(): Interceptor {
+        return LastFMSecretInterceptor
+    }
+
+    @Provides
+    @Singleton
+    @Named("lastFMResponseTypeInterceptor")
+    fun provideLastFMResponseTypeInterceptor(): Interceptor {
+        return LastFMResponseTypeInterceptor
     }
 
 }

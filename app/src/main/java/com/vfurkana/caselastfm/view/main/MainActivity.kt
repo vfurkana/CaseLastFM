@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.vfurkana.caselastfm.R
-import com.vfurkana.caselastfm.data.service.remote.LastFMArtistAPI
+import com.vfurkana.caselastfm.data.service.remote.api.LastFMArtistAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +18,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         lifecycleScope.launch {
-            service.getTopAlbums("Johnny Mercer")
+            val johnnyMBID = service.searchArtist("Johnny Mercer").results.artistMatches.artists[0].mbid
+            service.getTopAlbumsByArtist("Röyksopp")
+            service.getTopAlbumsByMBID(johnnyMBID)
         }
     }
 }
