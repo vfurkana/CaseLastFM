@@ -14,7 +14,7 @@ data class SavedAlbumEntity(
 data class AlbumEntity(
     @Embedded val baseAlbumEntity: BaseAlbumEntity,
     @ColumnInfo(name = "tags") val tags: List<TagEntity>?,
-    @ColumnInfo(name = "tracks") val tracks: List<TrackEntity>,
+    @ColumnInfo(name = "tracks") val tracks: List<TrackEntity>?,
     @ColumnInfo(name = "listeners") val listeners: String,
     @ColumnInfo(name = "wiki") val wiki: WikiEntity,
 )
@@ -37,7 +37,7 @@ data class TagEntity(
 )
 
 data class TrackEntity(
-    val streamable: StreamableEntity,
+    val streamable: StreamableEntity?,
     val duration: Long? = null,
     val url: String,
     val name: String,

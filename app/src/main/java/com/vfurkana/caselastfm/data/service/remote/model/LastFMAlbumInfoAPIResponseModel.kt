@@ -14,7 +14,7 @@ data class AlbumDetailAPIResponse(
     val tags: TagsApiResponse?,
     val playcount: String,
     val image: List<ImageAPIResponse>,
-    val tracks: TracksApiResponse,
+    val tracks: TracksApiResponse?,
     val url: String,
     val name: String,
     val listeners: String,
@@ -35,7 +35,7 @@ data class TracksApiResponse(
 )
 
 data class TrackApiResponse(
-    val streamable: StreamableApiResponse,
+    val streamable: StreamableApiResponse?,
     val duration: Long? = null,
     val url: String,
     val name: String,

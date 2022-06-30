@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
 }
 
 def localProperties = new Properties()
@@ -91,6 +92,10 @@ dependencies {
     // We can benefit from paging on Database. Honestly, it's just to say "Hey! look I can use paging"
 //    implementation "androidx.paging:paging-runtime:3.1.1"
 //    implementation "androidx.room:room-paging:2.4.2"
+
+    // Navigation between screens
+    implementation "androidx.navigation:navigation-fragment-ktx:2.4.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.4.2"
 
     // Test Dependencies
     testImplementation 'junit:junit:4.13.2'

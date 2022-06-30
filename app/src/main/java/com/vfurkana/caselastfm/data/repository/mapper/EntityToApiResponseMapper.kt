@@ -19,16 +19,18 @@ object EntityToApiResponseMapper {
             albumEntity.tags?.map { TagApiResponse(it.url, it.name) }?.let { TagsApiResponse(it) },
             albumEntity.baseAlbumEntity.playcount.toString(),
             albumEntity.baseAlbumEntity.images.map { ImageAPIResponse(it.url, it.size?.let { SizeAPIResponse.valueOf(it.name) }) },
-            TracksApiResponse(albumEntity.tracks.map {
+            albumEntity.tracks?.map {
                 TrackApiResponse(
-                    StreamableApiResponse(it.streamable.fulltrack, it.streamable.text),
+                    it.streamable?.let { StreamableApiResponse(it.fulltrack, it.text) },
                     it.duration,
                     it.url,
                     it.name,
                     AlbumInfoAttrApiResponse(it.attr.rank),
                     TrackArtistApiResponse(it.artist.url, it.artist.artistName, it.artist.mbid)
                 )
-            }),
+            }?.let {
+                TracksApiResponse(it)
+            },
             albumEntity.baseAlbumEntity.url,
             albumEntity.baseAlbumEntity.albumName,
             albumEntity.listeners,

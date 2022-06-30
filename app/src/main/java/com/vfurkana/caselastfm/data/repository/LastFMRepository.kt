@@ -9,10 +9,7 @@ import com.vfurkana.caselastfm.data.service.remote.model.ArtistApiResponse
 import com.vfurkana.caselastfm.data.service.remote.model.TopAlbum
 import com.vfurkana.caselastfm.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -25,10 +22,9 @@ class LastFMRepository @Inject constructor(
     @IoDispatcher val ioDispatcher: CoroutineDispatcher
 ) {
 
-    suspend fun getSavedAlbums(): List<AlbumDetailAPIResponse> {
-        return withContext(ioDispatcher) {
-            local.getSavedAlbums().map { localToRemoteMapper.mapSavedAlbumEntityToApiResponse(it) }
-        }
+    suspend fun getSavedAlbums(): Flow<List<AlbumDetailAPIResponse>> {
+        return local.getSavedAlbums().flowOn(ioDispatcher).map { it.map { localToRemoteMapper.mapSavedAlbumEntityToApiResponse(it) } }
+
     }
 
     suspend fun saveAlbum(album: AlbumDetailAPIResponse) {

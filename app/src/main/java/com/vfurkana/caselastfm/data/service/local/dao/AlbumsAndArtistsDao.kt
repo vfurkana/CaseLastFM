@@ -4,11 +4,12 @@ import androidx.room.*
 import com.vfurkana.caselastfm.data.service.local.model.AlbumEntity
 import com.vfurkana.caselastfm.data.service.local.model.ArtistEntity
 import com.vfurkana.caselastfm.data.service.local.model.SavedAlbumEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class AlbumsAndArtistsDao {
     @Query("SELECT * FROM savedAlbums")
-    abstract suspend fun getSavedAlbums(): List<SavedAlbumEntity>
+    abstract fun getSavedAlbums(): Flow<List<SavedAlbumEntity>>
 
     @Query("SELECT * FROM savedAlbums JOIN artists ON savedAlbums.artist = artists.artistName")
     abstract suspend fun getSavedAlbumsAndArtist(): Map<AlbumEntity, List<ArtistEntity>>

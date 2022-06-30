@@ -31,9 +31,9 @@ object ApiResponseToEntityMapper {
                     it.name
                 )
             },
-            albumDetail.tracks.track.map {
+            albumDetail.tracks?.track?.map {
                 TrackEntity(
-                    StreamableEntity(it.streamable.fulltrack, it.streamable.text),
+                    it.streamable?.let { StreamableEntity(it.fulltrack, it.text) },
                     it.duration,
                     it.url,
                     it.name,
