@@ -2,12 +2,12 @@ package com.vfurkana.caselastfm.data.service.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Image(
+data class ImageAPIResponse(
     @SerializedName("#text") val url: String,
-    val size: Size?
+    val size: SizeAPIResponse?
 )
 
-enum class Size {
+enum class SizeAPIResponse {
     @SerializedName("extralarge") ExtraLarge,
     @SerializedName("large") Large,
     @SerializedName("medium") Medium,

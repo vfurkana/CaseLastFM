@@ -1,14 +1,11 @@
 package com.vfurkana.caselastfm.view.main
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.vfurkana.caselastfm.R
 import com.vfurkana.caselastfm.data.repository.LastFMRepository
-import com.vfurkana.caselastfm.data.service.local.dao.AlbumsDao
-import com.vfurkana.caselastfm.data.service.remote.api.LastFMAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

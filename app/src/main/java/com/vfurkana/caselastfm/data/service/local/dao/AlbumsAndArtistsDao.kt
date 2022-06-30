@@ -6,7 +6,7 @@ import com.vfurkana.caselastfm.data.service.local.model.ArtistEntity
 import com.vfurkana.caselastfm.data.service.local.model.SavedAlbumEntity
 
 @Dao
-abstract class AlbumsDao {
+abstract class AlbumsAndArtistsDao {
     @Query("SELECT * FROM savedAlbums")
     abstract suspend fun getSavedAlbums(): List<SavedAlbumEntity>
 

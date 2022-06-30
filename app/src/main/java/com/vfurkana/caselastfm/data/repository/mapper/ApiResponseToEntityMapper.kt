@@ -1,16 +1,16 @@
 package com.vfurkana.caselastfm.data.repository.mapper
 
 import com.vfurkana.caselastfm.data.service.local.model.*
-import com.vfurkana.caselastfm.data.service.remote.model.AlbumDetail
-import com.vfurkana.caselastfm.data.service.remote.model.Artist
+import com.vfurkana.caselastfm.data.service.remote.model.AlbumDetailAPIResponse
+import com.vfurkana.caselastfm.data.service.remote.model.ArtistApiResponse
 
 object ApiResponseToEntityMapper {
 
-    fun mapAlbumDetailToSavedAlbumEntity(albumDetail: AlbumDetail): SavedAlbumEntity {
+    fun mapAlbumDetailToSavedAlbumEntity(albumDetail: AlbumDetailAPIResponse): SavedAlbumEntity {
         return SavedAlbumEntity(mapAlbumDetailToAlbumEntity(albumDetail))
     }
 
-    fun mapAlbumDetailToAlbumEntity(albumDetail: AlbumDetail): AlbumEntity {
+    fun mapAlbumDetailToAlbumEntity(albumDetail: AlbumDetailAPIResponse): AlbumEntity {
         return AlbumEntity(
             BaseAlbumEntity(
                 albumDetail.name,
@@ -33,11 +33,11 @@ object ApiResponseToEntityMapper {
             },
             albumDetail.tracks.track.map {
                 TrackEntity(
-                    it.streamable,
+                    StreamableEntity(it.streamable.fulltrack, it.streamable.text),
                     it.duration,
                     it.url,
                     it.name,
-                    it.attr,
+                    AlbumInfoAttrEntity(it.attr.rank),
                     BaseArtistEntity(
                         it.artist.name,
                         it.artist.mbid,
@@ -50,7 +50,7 @@ object ApiResponseToEntityMapper {
         )
     }
 
-    fun mapArtistToEntity(artist: Artist): ArtistEntity {
+    fun mapArtistToEntity(artist: ArtistApiResponse): ArtistEntity {
         return ArtistEntity(
             BaseArtistEntity(
                 artist.name,

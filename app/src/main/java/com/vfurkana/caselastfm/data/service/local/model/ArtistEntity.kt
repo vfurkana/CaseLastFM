@@ -1,8 +1,6 @@
 package com.vfurkana.caselastfm.data.service.local.model
 
 import androidx.room.*
-import androidx.room.ForeignKey.CASCADE
-import com.vfurkana.caselastfm.data.service.remote.model.Image
 
 @Entity(tableName = "artists", primaryKeys = ["artistName"])
 @TypeConverters(LastFMTypeConverters::class)

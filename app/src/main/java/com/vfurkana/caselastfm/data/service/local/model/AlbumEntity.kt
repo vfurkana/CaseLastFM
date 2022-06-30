@@ -1,8 +1,6 @@
 package com.vfurkana.caselastfm.data.service.local.model
 
 import androidx.room.*
-import com.vfurkana.caselastfm.data.service.remote.model.AlbumInfoAttr
-import com.vfurkana.caselastfm.data.service.remote.model.Streamable
 
 
 @Entity(tableName = "savedAlbums", primaryKeys = ["albumName"])
@@ -39,12 +37,21 @@ data class TagEntity(
 )
 
 data class TrackEntity(
-    val streamable: Streamable,
+    val streamable: StreamableEntity,
     val duration: Long? = null,
     val url: String,
     val name: String,
-    val attr: AlbumInfoAttr,
+    val attr: AlbumInfoAttrEntity,
     val artist: BaseArtistEntity
+)
+
+data class StreamableEntity(
+    val fulltrack: String,
+    val text: String
+)
+
+data class AlbumInfoAttrEntity(
+    val rank: Long
 )
 
 data class WikiEntity(

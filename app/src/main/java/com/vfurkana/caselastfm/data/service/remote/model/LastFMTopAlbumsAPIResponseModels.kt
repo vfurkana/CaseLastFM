@@ -19,7 +19,7 @@ data class TopAlbum(
     val mbid: String? = null,
     val url: String,
     val artist: AlbumArtist,
-    val image: List<Image>
+    val image: List<ImageAPIResponse>
 )
 
 data class AlbumArtist(
