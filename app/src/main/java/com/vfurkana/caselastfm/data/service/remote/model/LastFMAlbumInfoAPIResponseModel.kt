@@ -10,8 +10,8 @@ data class LastFMAlbumInfoAPIResponseModel(
 
 data class AlbumDetail(
     val artist: String,
-    val mbid: String,
-    val tags: Tags,
+    val mbid: String?,
+    val tags: Tags?,
     val playcount: String,
     val image: List<Image>,
     val tracks: Tracks,
@@ -46,7 +46,7 @@ data class Track(
 data class TrackArtist(
     val url: String,
     val name: String,
-    val mbid: String
+    val mbid: String?
 )
 
 data class AlbumInfoAttr(

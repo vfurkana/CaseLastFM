@@ -5,8 +5,9 @@ import androidx.room.RoomDatabase
 import com.vfurkana.caselastfm.data.service.local.dao.AlbumsDao
 import com.vfurkana.caselastfm.data.service.local.model.AlbumEntity
 import com.vfurkana.caselastfm.data.service.local.model.ArtistEntity
+import com.vfurkana.caselastfm.data.service.local.model.SavedAlbumEntity
 
-@Database(entities = [AlbumEntity::class, ArtistEntity::class], version = 1, exportSchema = true)
+@Database(entities = [SavedAlbumEntity::class, AlbumEntity::class, ArtistEntity::class], version = 1, exportSchema = true)
 abstract class AlbumsDatabase : RoomDatabase() {
     abstract fun albumsDao(): AlbumsDao
 }

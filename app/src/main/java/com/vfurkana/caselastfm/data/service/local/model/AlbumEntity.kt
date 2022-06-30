@@ -1,19 +1,24 @@
 package com.vfurkana.caselastfm.data.service.local.model
 
 import androidx.room.*
-import com.google.gson.annotations.SerializedName
 import com.vfurkana.caselastfm.data.service.remote.model.AlbumInfoAttr
 import com.vfurkana.caselastfm.data.service.remote.model.Streamable
-import com.vfurkana.caselastfm.data.service.remote.model.TrackArtist
 
+
+@Entity(tableName = "savedAlbums", primaryKeys = ["albumName"])
+@TypeConverters(LastFMTypeConverters::class)
+data class SavedAlbumEntity(
+    @Embedded val albumEntity: AlbumEntity,
+)
 
 @Entity(tableName = "albums", primaryKeys = ["albumName"])
 @TypeConverters(LastFMTypeConverters::class)
 data class AlbumEntity(
     @Embedded val baseAlbumEntity: BaseAlbumEntity,
     @ColumnInfo(name = "tags") val tags: List<TagEntity>?,
-    @ColumnInfo(name = "tracks") val tracks: List<TrackEntity>?,
-    @ColumnInfo(name = "listeners") val listeners: String?
+    @ColumnInfo(name = "tracks") val tracks: List<TrackEntity>,
+    @ColumnInfo(name = "listeners") val listeners: String,
+    @ColumnInfo(name = "wiki") val wiki: WikiEntity,
 )
 
 @TypeConverters(LastFMTypeConverters::class)
@@ -38,6 +43,12 @@ data class TrackEntity(
     val duration: Long? = null,
     val url: String,
     val name: String,
-    @SerializedName("@attr") val attr: AlbumInfoAttr,
-    val artist: TrackArtist
+    val attr: AlbumInfoAttr,
+    val artist: BaseArtistEntity
+)
+
+data class WikiEntity(
+    val published: String,
+    val summary: String,
+    val content: String
 )
