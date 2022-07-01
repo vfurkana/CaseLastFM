@@ -3,4 +3,5 @@
     <string name="Search_Here">Search Here</string>
     <string name="search_empty">Search result is empty.</string>
     <string name="search_success">Search result is successfull</string>
+    <string name="Retry">Retry</string>
 </resources>

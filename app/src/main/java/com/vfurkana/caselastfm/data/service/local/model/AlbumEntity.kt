@@ -16,7 +16,7 @@ data class AlbumEntity(
     @ColumnInfo(name = "tags") val tags: List<TagEntity>?,
     @ColumnInfo(name = "tracks") val tracks: List<TrackEntity>?,
     @ColumnInfo(name = "listeners") val listeners: String,
-    @ColumnInfo(name = "wiki") val wiki: WikiEntity,
+    @ColumnInfo(name = "wiki") val wiki: WikiEntity?,
 )
 
 @TypeConverters(LastFMTypeConverters::class)

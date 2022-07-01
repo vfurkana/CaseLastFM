@@ -25,18 +25,20 @@ class LastFMTypeConverters(val gson: Gson) {
     }
 
     @TypeConverter fun tagListFromString(value: String): List<TagEntity>? {
-        return gson.fromJson(value, object : TypeToken<List<TagEntity>?>() {}.type)
+        return if (value.isNullOrEmpty()) null else {
+            gson.fromJson(value, object : TypeToken<List<TagEntity>?>() {}.type)
+        }
     }
 
     @TypeConverter fun stringFromTagList(list: List<TagEntity>?): String {
         return gson.toJson(list)
     }
 
-    @TypeConverter fun wikiFromString(value: String): WikiEntity {
+    @TypeConverter fun wikiFromString(value: String): WikiEntity? {
         return gson.fromJson(value, WikiEntity::class.java)
     }
 
-    @TypeConverter fun stringFromWiki(wikiEntity: WikiEntity): String {
+    @TypeConverter fun stringFromWiki(wikiEntity: WikiEntity?): String {
         return gson.toJson(wikiEntity)
     }
 

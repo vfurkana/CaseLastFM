@@ -1,22 +1,25 @@
-package com.vfurkana.caselastfm.view.artisttopalbums
+package com.vfurkana.caselastfm.view.albumssaved
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.vfurkana.caselastfm.databinding.RowAlbumBinding
 import com.vfurkana.caselastfm.databinding.RowTopAlbumBinding
+import com.vfurkana.caselastfm.domain.model.Album
 import com.vfurkana.caselastfm.domain.model.ImageBySizeComparator
 import com.vfurkana.caselastfm.domain.model.TopAlbum
 
-class TopAlbumsRecyclerViewAdapter(val itemSelectListener: (TopAlbum) -> Unit) :
-    PagingDataAdapter<TopAlbum, TopAlbumsRecyclerViewAdapter.TopAlbumViewHolder>(
-        TopAlbumDiffCallback
+class SavedAlbumsRecyclerViewAdapter(val itemSelectListener: (Album) -> Unit) :
+    ListAdapter<Album, SavedAlbumsRecyclerViewAdapter.AlbumViewHolder>(
+        AlbumDiffCallback
     ) {
 
-    inner class TopAlbumViewHolder(private val binding: RowTopAlbumBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(album: TopAlbum?) {
+    inner class AlbumViewHolder(private val binding: RowAlbumBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(album: Album?) {
             album?.let {
                 binding.root.setOnClickListener { itemSelectListener(album) }
                 binding.textViewAlbumName.text = album.name
@@ -28,13 +31,13 @@ class TopAlbumsRecyclerViewAdapter(val itemSelectListener: (TopAlbum) -> Unit) :
         }
     }
 
-    override fun onBindViewHolder(holder: TopAlbumViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopAlbumViewHolder {
-        return TopAlbumViewHolder(
-            RowTopAlbumBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
+        return AlbumViewHolder(
+            RowAlbumBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )

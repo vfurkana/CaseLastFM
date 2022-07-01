@@ -34,7 +34,7 @@ object EntityToApiResponseMapper {
             albumEntity.baseAlbumEntity.url,
             albumEntity.baseAlbumEntity.albumName,
             albumEntity.listeners,
-            WikiApiResponse(albumEntity.wiki.published, albumEntity.wiki.summary, albumEntity.wiki.content)
+            albumEntity.wiki?.let { WikiApiResponse(it.published, it.summary, it.content) }
         )
     }
 

@@ -32,8 +32,6 @@ interface LastFMAPI {
     @GET("?method=album.getinfo")
     suspend fun getAlbumInfo(
         @Query("album") album: String,
-        @Query("artist") artist: String,
-        @Query("page") page: Int = 1,
-        @Query("limit") limit: Int = 25
+        @Query("artist") artist: String
     ): LastFMAlbumInfoAPIResponseModel
 }

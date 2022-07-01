@@ -46,7 +46,9 @@ object ApiResponseToEntityMapper {
                 )
             },
             albumDetail.listeners,
-            WikiEntity(albumDetail.wiki.published, albumDetail.wiki.summary, albumDetail.wiki.content)
+            albumDetail?.wiki?.let {
+                WikiEntity(it.published, it.summary, it.content)
+            }
         )
     }
 

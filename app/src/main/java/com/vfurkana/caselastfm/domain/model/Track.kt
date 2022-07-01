@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class Track(
     val duration: Long? = null,
     val url: String,
-    val name: String,
+    val name: String
 ) : Parcelable

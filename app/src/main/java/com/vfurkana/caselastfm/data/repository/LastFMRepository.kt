@@ -11,10 +11,8 @@ import com.vfurkana.caselastfm.data.service.remote.model.AlbumDetailAPIResponse
 import com.vfurkana.caselastfm.data.service.remote.model.ArtistApiResponse
 import com.vfurkana.caselastfm.data.service.remote.model.TopAlbumApiResponse
 import com.vfurkana.caselastfm.di.IoDispatcher
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -33,22 +31,35 @@ class LastFMRepository @Inject constructor(
         }.flow.cachedIn(inScope).flowOn(ioDispatcher)
     }
 
-    suspend fun getSavedAlbums(): Flow<List<AlbumDetailAPIResponse>> {
-        return local.getSavedAlbums().flowOn(ioDispatcher).map { it.map { localToRemoteMapper.mapSavedAlbumEntityToApiResponse(it) } }
-
-    }
-
-    suspend fun saveAlbum(album: AlbumDetailAPIResponse) {
-        return withContext(ioDispatcher) {
-            local.insertSavedAlbum(remoteToLocalMapper.mapAlbumDetailToSavedAlbumEntity(album))
-        }
-    }
-
     fun getArtistTopAlbumsPaged(artist: String?, inScope: CoroutineScope): Flow<PagingData<TopAlbumApiResponse>> {
         return Pager(
             PagingConfig(pageSize = 20, initialLoadSize = 20)
         ) {
             TopAlbumsPagingResource(artist, remote)
         }.flow.cachedIn(inScope).flowOn(ioDispatcher)
+    }
+
+    suspend fun getAlbumDetail(album: String, artist: String): AlbumDetailAPIResponse {
+        return withContext(ioDispatcher) {
+            runCatching {
+                local.getAlbum(album)?.let {
+                    localToRemoteMapper.mapAlbumEntityToApiResponse(it)
+                } ?: throw Exception("album not found")
+            }.recoverCatching {
+                remote.getAlbumInfo(album, artist).album.also {
+                    local.insertSavedAlbum(remoteToLocalMapper.mapAlbumDetailToSavedAlbumEntity(it))
+                }
+            }.getOrThrow()
+        }
+    }
+
+    fun getSavedAlbums(): Flow<List<AlbumDetailAPIResponse>> {
+        return local.getSavedAlbums().flowOn(ioDispatcher).map { it.map { localToRemoteMapper.mapSavedAlbumEntityToApiResponse(it) } }
+    }
+
+    suspend fun saveAlbum(album: AlbumDetailAPIResponse) {
+        return withContext(ioDispatcher) {
+            local.insertSavedAlbum(remoteToLocalMapper.mapAlbumDetailToSavedAlbumEntity(album))
+        }
     }
 }

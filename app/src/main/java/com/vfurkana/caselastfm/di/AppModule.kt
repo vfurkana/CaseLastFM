@@ -1,6 +1,8 @@
 package com.vfurkana.caselastfm.di
 
+import com.google.gson.FieldNamingStrategy
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,6 +18,6 @@ class AppModule {
     @Provides
     @Singleton
     fun provideGson(): Gson {
-        return Gson()
+        return GsonBuilder().serializeNulls().create()
     }
 }

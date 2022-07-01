@@ -17,6 +17,9 @@ abstract class AlbumsAndArtistsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertSavedAlbum(albumEntity: SavedAlbumEntity)
 
+    @Query("SELECT * FROM albums WHERE albumName LIKE :albumName LIMIT 1")
+    abstract suspend fun getAlbum(albumName: String): AlbumEntity?
+
     @Query("SELECT * FROM albums")
     abstract suspend fun getAllAlbums(): List<AlbumEntity>
 

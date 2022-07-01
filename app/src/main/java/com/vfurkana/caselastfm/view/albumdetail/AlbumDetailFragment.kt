@@ -4,27 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.vfurkana.caselastfm.R
-import com.vfurkana.caselastfm.data.repository.LastFMRepository
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.vfurkana.caselastfm.databinding.FragmentAlbumDetailBinding
-import com.vfurkana.caselastfm.domain.model.Album
-import com.vfurkana.caselastfm.domain.model.Artist
-import com.vfurkana.caselastfm.domain.model.Image
-import com.vfurkana.caselastfm.domain.model.Track
+import com.vfurkana.caselastfm.domain.model.*
 import com.vfurkana.caselastfm.view.common.BaseFragment
+import com.vfurkana.caselastfm.viewmodel.albumdetail.AlbumDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class AlbumDetailFragment : BaseFragment<FragmentAlbumDetailBinding>() {
-    @Inject lateinit var repository: LastFMRepository
+
+    val viewModel: AlbumDetailViewModel by viewModels()
+    private val tracksAdapter = AlbumDetailTracksAdapter()
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?, attachToRoot: Boolean): FragmentAlbumDetailBinding {
         return FragmentAlbumDetailBinding.inflate(inflater, container, false)
@@ -32,9 +28,32 @@ class AlbumDetailFragment : BaseFragment<FragmentAlbumDetailBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val album = arguments?.getParcelable<Album>("Album")
-        view.findViewById<TextView>(R.id.tv_fragment_desc).text = album?.tracks?.toString()
+        viewBinding?.recyclerviewTracks?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        viewBinding?.recyclerviewTracks?.adapter = tracksAdapter
+
+        lifecycleScope.launch {
+            viewModel.albumDetails.collectLatest { albumDetail ->
+                viewBinding?.imageViewAlbumImage?.let { Glide.with(it).load(albumDetail.image.maxWith(ImageBySizeComparator).url).into(it) }
+                viewBinding?.textViewAlbumName?.text = albumDetail.name
+                viewBinding?.textViewArtistName?.text = albumDetail.artistName
+                albumDetail.tracks?.let { tracksAdapter.submitList(it) }
+//                viewBinding?.floatingActionButtonSave?.setOnClickListener {
+//                    viewModel.saveAlbum(albumDetail)
+//                }
+            }
+        }
+
+        arguments?.let { bundle ->
+            bundle.getParcelable<Album>(KEY_EXTRAS_ALBUM)?.also {
+                viewModel.useAlbumDetail(it) } ?:
+            bundle.getParcelable<TopAlbum>(KEY_EXTRAS_TOP_ALBUM)?.also {
+                viewModel.getAlbumDetail(it) }
+        }
+    }
 
 
+    companion object {
+        val KEY_EXTRAS_ALBUM = "EXTRAS_ALBUM"
+        val KEY_EXTRAS_TOP_ALBUM = "EXTRAS_TOP_ALBUM"
     }
 }

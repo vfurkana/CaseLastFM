@@ -18,7 +18,7 @@ data class AlbumDetailAPIResponse(
     val url: String,
     val name: String,
     val listeners: String,
-    val wiki: WikiApiResponse
+    val wiki: WikiApiResponse?
 )
 
 data class TagsApiResponse(

@@ -6,8 +6,10 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.vfurkana.caselastfm.R
 import com.vfurkana.caselastfm.databinding.RowArtistBinding
 import com.vfurkana.caselastfm.domain.model.Artist
+import com.vfurkana.caselastfm.domain.model.ImageBySizeComparator
 
 class ArtistSearchRecyclerViewAdapter(val itemSelectListener: (Artist) -> Unit) :
     PagingDataAdapter<Artist, ArtistSearchRecyclerViewAdapter.ArtistViewHolder>(
@@ -21,15 +23,12 @@ class ArtistSearchRecyclerViewAdapter(val itemSelectListener: (Artist) -> Unit) 
                 binding.textViewArtistName.text = artist.name
                 binding.textViewUrl.text = artist.url
                 binding.textViewListeners.text = artist.listeners
-                val largestImage = it.image.maxWith { imageFirst, imageSecond ->
-                    val sizeFirst = imageFirst.size
-                    val sizeSecond = imageSecond.size
-                    if (sizeFirst == sizeSecond) 0
-                    else if (sizeFirst == null) -1
-                    else if (sizeSecond == null) 1
-                    else sizeFirst.compareTo(sizeSecond)
-                }
-                Glide.with(itemView).load(largestImage.url).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(binding.imageViewArtistImage)
+                val largestImage = it.image.maxWith(ImageBySizeComparator)
+                Glide.with(itemView)
+                    .load(largestImage.url)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .fallback(R.drawable.icon_image_placeholder)
+                    .into(binding.imageViewArtistImage)
             }
         }
     }
