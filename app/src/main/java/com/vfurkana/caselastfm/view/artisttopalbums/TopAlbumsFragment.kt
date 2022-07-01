@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vfurkana.caselastfm.R
-import com.vfurkana.caselastfm.databinding.FragmentAlbumDetailBinding
 import com.vfurkana.caselastfm.databinding.FragmentTopAlbumsBinding
 import com.vfurkana.caselastfm.domain.model.Artist
 import com.vfurkana.caselastfm.domain.model.TopAlbum

@@ -1,7 +1,6 @@
 package com.vfurkana.caselastfm.view.artisttopalbums
 
 import androidx.recyclerview.widget.DiffUtil
-import com.vfurkana.caselastfm.domain.model.Artist
 import com.vfurkana.caselastfm.domain.model.TopAlbum
 
 object TopAlbumDiffCallback : DiffUtil.ItemCallback<TopAlbum>() {

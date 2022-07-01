@@ -2,7 +2,6 @@ package com.vfurkana.caselastfm.data.repository
 
 import androidx.paging.*
 import com.vfurkana.caselastfm.data.repository.mapper.ApiResponseToEntityMapper
-import com.vfurkana.caselastfm.data.repository.mapper.EntityToApiResponseMapper
 import com.vfurkana.caselastfm.data.repository.pagingsource.SearchArtistsPagingResource
 import com.vfurkana.caselastfm.data.repository.pagingsource.TopAlbumsPagingResource
 import com.vfurkana.caselastfm.data.service.local.dao.AlbumsDao

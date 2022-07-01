@@ -1,7 +1,6 @@
 package com.vfurkana.caselastfm.view.artistsearch
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vfurkana.caselastfm.R
-import com.vfurkana.caselastfm.data.service.remote.model.ArtistApiResponse
 import com.vfurkana.caselastfm.databinding.FragmentSearchArtistBinding
 import com.vfurkana.caselastfm.domain.model.Artist
 import com.vfurkana.caselastfm.view.artisttopalbums.TopAlbumsFragment

@@ -23,7 +23,6 @@ class SavedAlbumsRecyclerViewAdapter(val itemSelectListener: (Album) -> Unit) :
             album?.let {
                 binding.root.setOnClickListener { itemSelectListener(album) }
                 binding.textViewAlbumName.text = album.name
-                binding.textViewUrl.text = album.url
                 binding.textViewArtistName.text = album.artistName
                 val largestImage = it.image.maxWith(ImageBySizeComparator)
                 Glide.with(itemView).load(largestImage.url).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(binding.imageViewAlbumImage)
