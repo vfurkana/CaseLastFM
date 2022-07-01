@@ -8,6 +8,6 @@ import javax.inject.Inject
 class AlbumDetailsUseCase @Inject constructor(val lastFMRepository: LastFMRepository, private val domainMapper: AlbumDetailDomainMapper) {
 
     suspend fun getAlbumDetails(album: String, artist: String): Album {
-        return domainMapper.mapAlbumDetailFromAPIResponse(lastFMRepository.getAlbumDetail(album, artist))
+        return domainMapper.mapAlbumDetailFromEntity(lastFMRepository.getAlbumDetail(album, artist))
     }
 }

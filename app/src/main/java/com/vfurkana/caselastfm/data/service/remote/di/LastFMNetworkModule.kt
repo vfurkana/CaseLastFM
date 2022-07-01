@@ -15,6 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 
@@ -24,6 +25,17 @@ object LastFMNetworkModule {
 
     private const val BASE_URL = "https://ws.audioscrobbler.com/2.0/"
     private const val TIMEOUT_SECONDS = 30L
+
+    @Retention(AnnotationRetention.BINARY)
+    @Qualifier
+    annotation class LastFMApiKey
+
+    @Provides
+    @Singleton
+    @LastFMApiKey
+    fun provideLastFMApiKey(): String {
+        return BuildConfig.LAST_FM_API_KEY
+    }
 
     @Provides
     @Singleton
@@ -78,8 +90,8 @@ object LastFMNetworkModule {
     @Provides
     @Singleton
     @Named("lastFMSecretInterceptor")
-    fun provideLastFMSecretInterceptor(): Interceptor {
-        return LastFMSecretInterceptor
+    fun provideLastFMSecretInterceptor(@LastFMApiKey apiKey: String): Interceptor {
+        return LastFMSecretInterceptor(apiKey)
     }
 
     @Provides

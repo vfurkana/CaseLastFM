@@ -9,6 +9,6 @@ import javax.inject.Inject
 
 class SavedAlbumsUseCase @Inject constructor(val lastFMRepository: LastFMRepository, private val domainMapper: AlbumDetailDomainMapper) {
     fun getSavedAlbums(): Flow<List<Album>> {
-        return lastFMRepository.getSavedAlbums().map { it.map { domainMapper.mapAlbumDetailFromAPIResponse(it) } }
+        return lastFMRepository.getSavedAlbums().map { it.map { domainMapper.mapAlbumDetailFromEntity(it) } }
     }
 }

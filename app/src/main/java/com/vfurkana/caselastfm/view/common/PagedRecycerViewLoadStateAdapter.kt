@@ -14,7 +14,7 @@ import com.vfurkana.caselastfm.databinding.RowLoadStateBinding
 class PagedRecyclerViewLoadStateAdapter(val retryListener: () -> Unit) : LoadStateAdapter<PagedRecyclerViewLoadStateAdapter.LoadStateViewHolder>() {
 
     inner class LoadStateViewHolder(
-        private val binding: RowLoadStateBinding
+        binding: RowLoadStateBinding
     ) : RecyclerView.ViewHolder(
         binding.root
     ) {

@@ -18,10 +18,10 @@ data class Image(
 }
 
 val ImageBySizeComparator: Comparator<Image> = Comparator { first, second ->
-    val firstSize = first.size
-    val secondSize = second.size
-    if (firstSize == secondSize) 0
-    else if (firstSize == null) -1
-    else if (secondSize == null) 1
-    else secondSize.compareTo(firstSize)
+    when {
+        first.size == second.size -> 0
+        second.size == null -> 1
+        first.size == null -> -1
+        else -> first.size.compareTo(second.size)
+    }
 }

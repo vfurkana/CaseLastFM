@@ -7,7 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class Album(
     val name: String,
     val artistName: String,
-    val url: String,
     val image: List<Image>,
     val tracks: List<Track>?
 ) : Parcelable

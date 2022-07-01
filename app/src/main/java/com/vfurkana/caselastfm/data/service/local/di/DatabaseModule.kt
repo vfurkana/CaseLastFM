@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
 import com.vfurkana.caselastfm.data.service.local.AlbumsDatabase
-import com.vfurkana.caselastfm.data.service.local.dao.AlbumsAndArtistsDao
+import com.vfurkana.caselastfm.data.service.local.dao.AlbumsDao
 import com.vfurkana.caselastfm.data.service.local.model.LastFMTypeConverters
 import dagger.Module
 import dagger.Provides
@@ -36,7 +36,7 @@ class DatabaseModule {
     @Provides
     fun provideAlbumsDao(
         albumsDatabase: AlbumsDatabase
-    ): AlbumsAndArtistsDao {
+    ): AlbumsDao {
         return albumsDatabase.albumsDao()
     }
 

@@ -22,10 +22,4 @@ class SavedAlbumsViewModel @Inject constructor(private val savedAlbumsUseCase: S
     val savedAlbumsFlow: Flow<List<Album>> = savedAlbumsFlowInner.onSubscription {
         savedAlbumsUseCase.getSavedAlbums().collect(this)
     }
-
-//    private fun getSavedAlbums() {
-//        viewModelScope.launch {
-//            savedAlbumsUseCase.getSavedAlbums().collect(savedAlbumsFlowInner)
-//        }
-//    }
 }

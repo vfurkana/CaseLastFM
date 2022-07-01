@@ -8,38 +8,16 @@ import com.google.gson.reflect.TypeToken
 
 @ProvidedTypeConverter
 class LastFMTypeConverters(val gson: Gson) {
-    @TypeConverter fun imageListFromString(value: String): List<ImageEntity>? {
-        return gson.fromJson(value, object : TypeToken<List<ImageEntity>?>() {}.type)
+    @TypeConverter fun imageListFromString(value: String): List<AlbumEntity.Image>? {
+        return gson.fromJson(value, object : TypeToken<List<AlbumEntity.Image>?>() {}.type)
     }
-
-    @TypeConverter fun stringFromImageList(list: List<ImageEntity>?): String {
+    @TypeConverter fun stringFromImageList(list: List<AlbumEntity.Image>?): String {
         return gson.toJson(list)
     }
-
-    @TypeConverter fun trackListFromString(value: String): List<TrackEntity>? {
-        return gson.fromJson(value, object : TypeToken<List<TrackEntity>?>() {}.type)
+    @TypeConverter fun trackListFromString(value: String): List<AlbumEntity.Track>? {
+        return gson.fromJson(value, object : TypeToken<List<AlbumEntity.Track>?>() {}.type)
     }
-
-    @TypeConverter fun stringFromTrackList(list: List<TrackEntity>?): String {
+    @TypeConverter fun stringFromTrackList(list: List<AlbumEntity.Track>?): String {
         return gson.toJson(list)
     }
-
-    @TypeConverter fun tagListFromString(value: String): List<TagEntity>? {
-        return if (value.isNullOrEmpty()) null else {
-            gson.fromJson(value, object : TypeToken<List<TagEntity>?>() {}.type)
-        }
-    }
-
-    @TypeConverter fun stringFromTagList(list: List<TagEntity>?): String {
-        return gson.toJson(list)
-    }
-
-    @TypeConverter fun wikiFromString(value: String): WikiEntity? {
-        return gson.fromJson(value, WikiEntity::class.java)
-    }
-
-    @TypeConverter fun stringFromWiki(wikiEntity: WikiEntity?): String {
-        return gson.toJson(wikiEntity)
-    }
-
 }

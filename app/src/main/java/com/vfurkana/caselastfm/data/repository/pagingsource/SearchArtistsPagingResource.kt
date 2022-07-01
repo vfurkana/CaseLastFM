@@ -3,17 +3,16 @@ package com.vfurkana.caselastfm.data.repository.pagingsource
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.vfurkana.caselastfm.data.service.remote.api.LastFMAPI
-import com.vfurkana.caselastfm.data.service.remote.model.ArtistApiResponse
-import javax.inject.Inject
+import com.vfurkana.caselastfm.data.service.remote.model.LastFMSearchArtistAPIResponseModel
 
-class SearchArtistsPagingResource constructor(val query: String?, val lastFMAPI: LastFMAPI) : PagingSource<Int, ArtistApiResponse>() {
+class SearchArtistsPagingResource constructor(val query: String, val lastFMAPI: LastFMAPI) :
+    PagingSource<Int, LastFMSearchArtistAPIResponseModel.Artist>() {
 
     private val initialPageIndex = 1
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ArtistApiResponse> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LastFMSearchArtistAPIResponseModel.Artist> {
         val page = params.key ?: initialPageIndex
         try {
-            if (query.isNullOrEmpty()) return LoadResult.Error(Exception("Invalid query"))
             val response = lastFMAPI.searchArtist(query, page, params.loadSize)
             return response.results?.let {
                 LoadResult.Page(
@@ -27,7 +26,7 @@ class SearchArtistsPagingResource constructor(val query: String?, val lastFMAPI:
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, ArtistApiResponse>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, LastFMSearchArtistAPIResponseModel.Artist>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)

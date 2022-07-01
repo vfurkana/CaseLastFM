@@ -1,69 +1,28 @@
 package com.vfurkana.caselastfm.data.repository.mapper
 
 import com.vfurkana.caselastfm.data.service.local.model.*
-import com.vfurkana.caselastfm.data.service.remote.model.AlbumDetailAPIResponse
-import com.vfurkana.caselastfm.data.service.remote.model.ArtistApiResponse
+import com.vfurkana.caselastfm.data.service.remote.model.LastFMAlbumInfoAPIResponseModel
 
 object ApiResponseToEntityMapper {
 
-    fun mapAlbumDetailToSavedAlbumEntity(albumDetail: AlbumDetailAPIResponse): SavedAlbumEntity {
-        return SavedAlbumEntity(mapAlbumDetailToAlbumEntity(albumDetail))
-    }
-
-    fun mapAlbumDetailToAlbumEntity(albumDetail: AlbumDetailAPIResponse): AlbumEntity {
+    fun mapAlbumResponseToAlbumEntity(albumDetail: LastFMAlbumInfoAPIResponseModel.AlbumDetail): AlbumEntity {
         return AlbumEntity(
-            BaseAlbumEntity(
-                albumDetail.name,
-                albumDetail.playcount.toLong(),
-                albumDetail.mbid,
-                albumDetail.url,
-                albumDetail.artist,
-                albumDetail.image.map {
-                    ImageEntity(
-                        it.url,
-                        it.size?.let { SizeEntity.valueOf(it.name) }
-                    )
-                }
-            ),
-            albumDetail.tags?.tag?.map {
-                TagEntity(
+            albumDetail.name,
+            albumDetail.artist,
+            albumDetail.image.map {
+                AlbumEntity.Image(
                     it.url,
-                    it.name
+                    it.size?.let { AlbumEntity.Size.valueOf(it.name) }
                 )
             },
             albumDetail.tracks?.track?.map {
-                TrackEntity(
-                    it.streamable?.let { StreamableEntity(it.fulltrack, it.text) },
+                AlbumEntity.Track(
                     it.duration,
                     it.url,
                     it.name,
-                    AlbumInfoAttrEntity(it.attr.rank),
-                    BaseArtistEntity(
-                        it.artist.name,
-                        it.artist.mbid,
-                        it.artist.url
-                    )
+                    it.artist.name,
                 )
             },
-            albumDetail.listeners,
-            albumDetail?.wiki?.let {
-                WikiEntity(it.published, it.summary, it.content)
-            }
-        )
-    }
-
-    fun mapArtistToEntity(artist: ArtistApiResponse): ArtistEntity {
-        return ArtistEntity(
-            BaseArtistEntity(
-                artist.name,
-                artist.mbid,
-                artist.url
-            ),
-            artist.listeners,
-            artist.streamable,
-            artist.image.map {
-                ImageEntity(it.url, it.size?.let { SizeEntity.valueOf(it.name) })
-            }
         )
     }
 }

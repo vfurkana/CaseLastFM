@@ -1,5 +1,6 @@
 package com.vfurkana.caselastfm.di
 
+import androidx.viewbinding.BuildConfig
 import com.google.gson.FieldNamingStrategy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

@@ -8,12 +8,11 @@ import com.vfurkana.caselastfm.domain.usecase.AlbumDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AlbumDetailViewModel @Inject constructor(val albumDetailsUseCase: AlbumDetailsUseCase) : ViewModel() {
+class AlbumDetailViewModel @Inject constructor(private val albumDetailsUseCase: AlbumDetailsUseCase) : ViewModel() {
 
     private val albumDetailsInner: MutableSharedFlow<Album> = MutableSharedFlow()
     val albumDetails: Flow<Album> = albumDetailsInner

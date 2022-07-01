@@ -3,63 +3,63 @@ package com.vfurkana.caselastfm.data.service.remote.model
 import com.google.gson.annotations.SerializedName
 
 data class LastFMAlbumInfoAPIResponseModel(
-    val album: AlbumDetailAPIResponse,
+    val album: AlbumDetail,
     val message: String,
     val error: Long
-)
+) {
+    data class AlbumDetail(
+        val artist: String,
+        val mbid: String?,
+        val tags: Tags?,
+        val playcount: String,
+        val image: List<ImageAPIResponse>,
+        val tracks: Tracks?,
+        val url: String,
+        val name: String,
+        val listeners: String,
+        val wiki: Wiki?
+    )
 
-data class AlbumDetailAPIResponse(
-    val artist: String,
-    val mbid: String?,
-    val tags: TagsApiResponse?,
-    val playcount: String,
-    val image: List<ImageAPIResponse>,
-    val tracks: TracksApiResponse?,
-    val url: String,
-    val name: String,
-    val listeners: String,
-    val wiki: WikiApiResponse?
-)
+    data class Tags(
+        val tag: List<Tag>
+    )
 
-data class TagsApiResponse(
-    val tag: List<TagApiResponse>
-)
+    data class Tag(
+        val url: String,
+        val name: String
+    )
 
-data class TagApiResponse(
-    val url: String,
-    val name: String
-)
+    data class Tracks(
+        val track: List<Track>
+    )
 
-data class TracksApiResponse(
-    val track: List<TrackApiResponse>
-)
+    data class Track(
+        val streamable: Streamable?,
+        val duration: Long? = null,
+        val url: String,
+        val name: String,
+        @SerializedName("@attr") val attr: APIAttr,
+        val artist: TrackArtist
+    )
 
-data class TrackApiResponse(
-    val streamable: StreamableApiResponse?,
-    val duration: Long? = null,
-    val url: String,
-    val name: String,
-    @SerializedName("@attr") val attr: AlbumInfoAttrApiResponse,
-    val artist: TrackArtistApiResponse
-)
+    data class TrackArtist(
+        val url: String,
+        val name: String,
+        val mbid: String?
+    )
 
-data class TrackArtistApiResponse(
-    val url: String,
-    val name: String,
-    val mbid: String?
-)
+    data class APIAttr(
+        val rank: Long
+    )
 
-data class AlbumInfoAttrApiResponse(
-    val rank: Long
-)
+    data class Streamable(
+        val fulltrack: String,
+        @SerializedName("#text") val text: String
+    )
 
-data class StreamableApiResponse(
-    val fulltrack: String,
-    @SerializedName("#text") val text: String
-)
-
-data class WikiApiResponse(
-    val published: String,
-    val summary: String,
-    val content: String
-)
+    data class Wiki(
+        val published: String,
+        val summary: String,
+        val content: String
+    )
+}
