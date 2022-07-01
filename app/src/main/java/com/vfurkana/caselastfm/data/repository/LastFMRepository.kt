@@ -1,14 +1,18 @@
 package com.vfurkana.caselastfm.data.repository
 
+import androidx.paging.*
 import com.vfurkana.caselastfm.data.repository.mapper.ApiResponseToEntityMapper
 import com.vfurkana.caselastfm.data.repository.mapper.EntityToApiResponseMapper
+import com.vfurkana.caselastfm.data.repository.pagingsource.SearchArtistsPagingResource
+import com.vfurkana.caselastfm.data.repository.pagingsource.TopAlbumsPagingResource
 import com.vfurkana.caselastfm.data.service.local.dao.AlbumsAndArtistsDao
 import com.vfurkana.caselastfm.data.service.remote.api.LastFMAPI
 import com.vfurkana.caselastfm.data.service.remote.model.AlbumDetailAPIResponse
 import com.vfurkana.caselastfm.data.service.remote.model.ArtistApiResponse
-import com.vfurkana.caselastfm.data.service.remote.model.TopAlbum
+import com.vfurkana.caselastfm.data.service.remote.model.TopAlbumApiResponse
 import com.vfurkana.caselastfm.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -21,6 +25,13 @@ class LastFMRepository @Inject constructor(
     val remoteToLocalMapper: ApiResponseToEntityMapper,
     @IoDispatcher val ioDispatcher: CoroutineDispatcher
 ) {
+    fun searchArtistPaged(artist: String?, inScope: CoroutineScope): Flow<PagingData<ArtistApiResponse>> {
+        return Pager(
+            PagingConfig(pageSize = 20, initialLoadSize = 20)
+        ) {
+            SearchArtistsPagingResource(artist, remote)
+        }.flow.cachedIn(inScope).flowOn(ioDispatcher)
+    }
 
     suspend fun getSavedAlbums(): Flow<List<AlbumDetailAPIResponse>> {
         return local.getSavedAlbums().flowOn(ioDispatcher).map { it.map { localToRemoteMapper.mapSavedAlbumEntityToApiResponse(it) } }
@@ -33,23 +44,11 @@ class LastFMRepository @Inject constructor(
         }
     }
 
-    suspend fun searchArtist(artist: String): Flow<List<ArtistApiResponse>> {
-        return flow { emit(remote.searchArtist(artist).results.artistMatches.artists) }
-            .flowOn(ioDispatcher)
-            .onEach {
-                local.insertAllArtists(it.map { remoteToLocalMapper.mapArtistToEntity(it) })
-            }
-    }
-
-    suspend fun getArtistTopAlbums(artist: String): Flow<List<TopAlbum>> {
-        return flow { emit(remote.getTopAlbumsByArtist(artist).topAlbums.album) }.flowOn(ioDispatcher)
-    }
-
-    suspend fun getArtistAlbum(artist: String, album: String): AlbumDetailAPIResponse {
-        return withContext(ioDispatcher) {
-            remote.getAlbumInfo(album, artist).album.also {
-                local.insertAlbum(remoteToLocalMapper.mapAlbumDetailToAlbumEntity(it))
-            }
-        }
+    fun getArtistTopAlbumsPaged(artist: String?, inScope: CoroutineScope): Flow<PagingData<TopAlbumApiResponse>> {
+        return Pager(
+            PagingConfig(pageSize = 20, initialLoadSize = 20)
+        ) {
+            TopAlbumsPagingResource(artist, remote)
+        }.flow.cachedIn(inScope).flowOn(ioDispatcher)
     }
 }

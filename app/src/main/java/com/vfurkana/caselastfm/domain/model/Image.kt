@@ -9,10 +9,15 @@ data class Image(
     val url: String
 ) : Parcelable {
     enum class ImageSize {
+        Mega,
         ExtraLarge,
         Large,
         Medium,
-        Mega,
         Small;
     }
+}
+
+
+operator fun Image.ImageSize?.compareTo(second: Image.ImageSize): Int {
+    return this?.compareTo(second) ?: -1
 }

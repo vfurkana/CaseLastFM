@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/artist_row_height"
+    android:padding="6dp">
+
+    <ImageView
+        android:id="@+id/imageView_artistImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="W,1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_artistName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textSize="@dimen/textSizeLarge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageView_artistImage"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Super Cool Amazing Band" />
+
+    <TextView
+        android:id="@+id/textView_url"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:autoLink="web"
+        android:ellipsize="none"
+        android:lines="1"
+        android:textSize="@dimen/textSizeMedium"
+        app:layout_constraintEnd_toStartOf="@id/textView_listeners"
+        app:layout_constraintStart_toEndOf="@id/imageView_artistImage"
+        app:layout_constraintTop_toBottomOf="@id/textView_artistName"
+        tools:text="Super Cool Amazing Band" />
+
+    <TextView
+        android:id="@+id/textView_listeners"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_artistName"
+        tools:text="16767214" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

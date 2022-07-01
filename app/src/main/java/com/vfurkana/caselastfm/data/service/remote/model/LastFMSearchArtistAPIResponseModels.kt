@@ -2,8 +2,8 @@ package com.vfurkana.caselastfm.data.service.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class SearchAPIResponseModel(
-    val results: ResultsApiResponse,
+data class SearchArtistAPIResponseModel(
+    val results: ResultsApiResponse?,
     val message: String,
     val error: Long
 )
