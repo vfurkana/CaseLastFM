@@ -9,7 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vfurkana.caselastfm.R
 import com.vfurkana.caselastfm.databinding.RowArtistBinding
 import com.vfurkana.caselastfm.domain.model.Artist
-import com.vfurkana.caselastfm.domain.model.ImageBySizeComparator
+import com.vfurkana.caselastfm.domain.model.Image
 
 class ArtistSearchRecyclerViewAdapter(val itemSelectListener: (Artist) -> Unit) :
     PagingDataAdapter<Artist, ArtistSearchRecyclerViewAdapter.ArtistViewHolder>(
@@ -23,7 +23,7 @@ class ArtistSearchRecyclerViewAdapter(val itemSelectListener: (Artist) -> Unit) 
                 binding.textViewArtistName.text = artist.name
                 binding.textViewUrl.text = artist.url
                 binding.textViewListeners.text = artist.listeners
-                val largestImage = it.image.maxWith(ImageBySizeComparator)
+                val largestImage = it.image.maxWith(Image.ImageSize.ImageBySizeComparator)
                 Glide.with(itemView)
                     .load(largestImage.url)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)

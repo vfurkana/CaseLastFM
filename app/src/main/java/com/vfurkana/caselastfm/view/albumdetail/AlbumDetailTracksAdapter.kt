@@ -8,12 +8,8 @@ import com.vfurkana.caselastfm.databinding.RowTrackBinding
 import com.vfurkana.caselastfm.domain.model.Track
 import java.util.concurrent.TimeUnit
 
-class AlbumDetailTracksAdapter : ListAdapter<Track, AlbumDetailTracksAdapter.TrackViewHolder>(
-    TrackDiffCallback
-) {
-
-    inner class TrackViewHolder(val binding: RowTrackBinding) : RecyclerView.ViewHolder(binding.root) {
-
+class AlbumDetailTracksAdapter : ListAdapter<Track, AlbumDetailTracksAdapter.TrackViewHolder>(TrackDiffCallback) {
+    inner class TrackViewHolder(private val binding: RowTrackBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(track: Track) {
             binding.textViewTrackName.text = track.name
             binding.textViewUrl.text = track.url
@@ -25,7 +21,6 @@ class AlbumDetailTracksAdapter : ListAdapter<Track, AlbumDetailTracksAdapter.Tra
                     TimeUnit.SECONDS.toSeconds(it) % 60
                 )
             }
-
         }
     }
 

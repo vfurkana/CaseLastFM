@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class ArtistTopAlbumsUseCase @Inject constructor(val lastFMRepository: LastFMRepository, private val domainMapper: TopAlbumDomainMapper) {
 
-    fun getTopAlbumsPaged(query: String?, inScope: CoroutineScope): Flow<PagingData<TopAlbum>> {
-        return lastFMRepository.getArtistTopAlbumsPaged(query, inScope).map { it.map { domainMapper.mapTopAlbumFromAPIResponse(it) } }
+    suspend fun getTopAlbumsPaged(query: String?): Flow<PagingData<TopAlbum>> {
+        return lastFMRepository.getArtistTopAlbumsPaged(query).map { it.map { domainMapper.mapTopAlbumFromAPIResponse(it) } }
     }
 }

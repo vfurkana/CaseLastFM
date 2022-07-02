@@ -3,18 +3,15 @@ package com.vfurkana.caselastfm.view.albumssaved
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vfurkana.caselastfm.databinding.RowAlbumBinding
-import com.vfurkana.caselastfm.databinding.RowTopAlbumBinding
 import com.vfurkana.caselastfm.domain.model.Album
-import com.vfurkana.caselastfm.domain.model.ImageBySizeComparator
-import com.vfurkana.caselastfm.domain.model.TopAlbum
+import com.vfurkana.caselastfm.domain.model.Image
 
 class SavedAlbumsRecyclerViewAdapter(val itemSelectListener: (Album) -> Unit) :
-    ListAdapter<Album, SavedAlbumsRecyclerViewAdapter.AlbumViewHolder>(
+    PagingDataAdapter<Album, SavedAlbumsRecyclerViewAdapter.AlbumViewHolder>(
         AlbumDiffCallback
     ) {
 
@@ -24,7 +21,7 @@ class SavedAlbumsRecyclerViewAdapter(val itemSelectListener: (Album) -> Unit) :
                 binding.root.setOnClickListener { itemSelectListener(album) }
                 binding.textViewAlbumName.text = album.name
                 binding.textViewArtistName.text = album.artistName
-                val largestImage = it.image.maxWith(ImageBySizeComparator)
+                val largestImage = it.image.maxWith(Image.ImageSize.ImageBySizeComparator)
                 Glide.with(itemView).load(largestImage.url).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(binding.imageViewAlbumImage)
             }
         }

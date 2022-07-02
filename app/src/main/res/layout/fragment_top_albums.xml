@@ -13,5 +13,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.vfurkana.caselastfm.view.common.StateView
+        android:id="@+id/stateView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:emptyMessage="@string/There_s_nothing_to_see_here"
+        app:errorMessage="@string/Generic_error"
+        app:initialMessage="@string/Saved_albums_will_appear_here"
+        app:progressMessage="@string/Please_wait"
+        app:refreshMessage="@string/Refreshing" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

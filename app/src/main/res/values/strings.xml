@@ -4,4 +4,12 @@
     <string name="search_empty">Search result is empty.</string>
     <string name="search_success">Search result is successfull</string>
     <string name="Retry">Retry</string>
+    <string name="Saved_albums_will_appear_here">Saved albums will appear here.</string>
+    <string name="Generic_error">Something went wrong. Please try again later.</string>
+    <string name="Please_wait">Please Wait</string>
+    <string name="There_s_nothing_to_see_here">There\'s nothing to see here. \n \n (Yet?!)</string>
+    <string name="Refreshing">Refreshing</string>
+    <string name="Search_results_will_appear_here">Search results will appear here</string>
+    <string name="No_matching_result">No matching resuts found</string>
+    <string name="Album_details_will_appear_here">Album details will appear here</string>
 </resources>

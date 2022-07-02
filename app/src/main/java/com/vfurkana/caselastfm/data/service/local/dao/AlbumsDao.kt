@@ -1,5 +1,6 @@
 package com.vfurkana.caselastfm.data.service.local.dao
 
+import androidx.paging.PagingSource
 import androidx.room.*
 import com.vfurkana.caselastfm.data.service.local.model.AlbumEntity
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +11,7 @@ abstract class AlbumsDao {
     abstract suspend fun getAlbum(albumName: String): AlbumEntity?
 
     @Query("SELECT * FROM albums")
-    abstract fun getAllAlbums(): Flow<List<AlbumEntity>>
+    abstract fun getAllAlbums(): PagingSource<Int, AlbumEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertAlbum(albumEntity: AlbumEntity)

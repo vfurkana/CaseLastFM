@@ -8,20 +8,22 @@ data class Image(
     val size: ImageSize?,
     val url: String
 ) : Parcelable {
-    enum class ImageSize {
-        Mega,
-        ExtraLarge,
-        Large,
-        Medium,
-        Small;
-    }
-}
+    enum class ImageSize(private val sizeValue: Int) {
+        Mega(5),
+        ExtraLarge(4),
+        Large(3),
+        Medium(2),
+        Small(1);
 
-val ImageBySizeComparator: Comparator<Image> = Comparator { first, second ->
-    when {
-        first.size == second.size -> 0
-        second.size == null -> 1
-        first.size == null -> -1
-        else -> first.size.compareTo(second.size)
+        companion object {
+            val ImageBySizeComparator: Comparator<Image> = Comparator { first, second ->
+                when {
+                    first.size == second.size -> 0
+                    second.size == null -> 1
+                    first.size == null -> -1
+                    else -> first.size.sizeValue.compareTo(second.size.sizeValue)
+                }
+            }
+        }
     }
 }

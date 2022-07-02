@@ -23,4 +23,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.vfurkana.caselastfm.view.common.StateView
+        android:id="@+id/stateView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:emptyMessage="@string/No_matching_result"
+        app:errorMessage="@string/Generic_error"
+        app:initialMessage="@string/Search_results_will_appear_here"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editText_searchInput"
+        app:progressMessage="@string/Please_wait"
+        app:refreshMessage="@string/Refreshing" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

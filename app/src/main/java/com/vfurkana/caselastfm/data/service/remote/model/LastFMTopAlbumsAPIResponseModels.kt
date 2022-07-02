@@ -3,7 +3,7 @@ package com.vfurkana.caselastfm.data.service.remote.model
 import com.google.gson.annotations.SerializedName
 
 data class LastFMTopAlbumsAPIResponse(
-    @SerializedName("topalbums") val topAlbums: TopAlbums,
+    @SerializedName("topalbums") val topAlbums: TopAlbums?,
     val message: String,
     val error: Long
 ) {

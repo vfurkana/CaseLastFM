@@ -1,6 +1,7 @@
 package com.vfurkana.caselastfm.view.artistsearch
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vfurkana.caselastfm.R
 import com.vfurkana.caselastfm.databinding.FragmentSearchArtistBinding
@@ -16,8 +19,10 @@ import com.vfurkana.caselastfm.domain.model.Artist
 import com.vfurkana.caselastfm.view.artisttopalbums.TopAlbumsFragment
 import com.vfurkana.caselastfm.view.common.BaseFragment
 import com.vfurkana.caselastfm.view.common.PagedRecyclerViewLoadStateAdapter
+import com.vfurkana.caselastfm.view.common.ViewState
 import com.vfurkana.caselastfm.viewmodel.artistsearch.ArtistSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -38,18 +43,42 @@ class ArtistSearchFragment : BaseFragment<FragmentSearchArtistBinding>() {
             viewModel.onSearchInput(it?.toString())
         }
         viewBinding?.recyclerViewArtists?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        viewBinding?.recyclerViewArtists?.adapter = recyclerViewAdapter.withLoadStateFooter(PagedRecyclerViewLoadStateAdapter(this@ArtistSearchFragment::retry))
+        viewBinding?.recyclerViewArtists?.adapter =
+            recyclerViewAdapter.withLoadStateFooter(PagedRecyclerViewLoadStateAdapter(this@ArtistSearchFragment::retry))
+        viewBinding?.recyclerViewArtists?.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
+        recyclerViewAdapter.addLoadStateListener { loadState ->
+            if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && recyclerViewAdapter.itemCount < 1) {
+                viewBinding?.stateView?.updateWithViewState(ViewState.Empty())
+            }
+            (loadState.refresh as? LoadState.Error)?.let {
+                if (recyclerViewAdapter.itemCount <= 1) {
+                    viewBinding?.stateView?.updateWithViewState(
+                        ViewState.Error(it.error)
+                    )
+                }
+            }
+        }
+
         lifecycleScope.launch {
             viewModel.searchResults.collectLatest {
-                recyclerViewAdapter.submitData(it)
+                Log.i("furkooo", it.toString())
+                viewBinding?.stateView?.updateWithViewState(it)
+                if (it is ViewState.Success) {
+                    recyclerViewAdapter.submitData(it.data)
+                }
             }
         }
     }
 
-
+    var currentJob: Job? = null
     private fun retry() {
-        viewBinding?.editTextSearchInput?.text?.let {
-            viewModel.onSearchInput(it.toString())
+        currentJob?.cancel()
+        currentJob = null
+        currentJob = lifecycleScope.launch {
+            viewBinding?.editTextSearchInput?.text?.let {
+                viewModel.onSearchInput(it.toString())
+            }
+
         }
     }
 

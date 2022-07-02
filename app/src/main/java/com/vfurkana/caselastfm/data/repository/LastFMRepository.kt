@@ -1,5 +1,6 @@
 package com.vfurkana.caselastfm.data.repository
 
+import android.util.Log
 import androidx.paging.*
 import com.vfurkana.caselastfm.data.repository.mapper.ApiResponseToEntityMapper
 import com.vfurkana.caselastfm.data.repository.pagingsource.SearchArtistsPagingResource
@@ -22,37 +23,43 @@ class LastFMRepository @Inject constructor(
     private val remoteToLocalMapper: ApiResponseToEntityMapper,
     @IoDispatcher val ioDispatcher: CoroutineDispatcher
 ) {
-    fun searchArtistPaged(artist: String?, inScope: CoroutineScope): Flow<PagingData<LastFMSearchArtistAPIResponseModel.Artist>> {
-        return if (artist.isNullOrEmpty()) flow { PagingData.empty<LastFMSearchArtistAPIResponseModel.Artist>() } else
+    fun searchArtistPaged(artist: String?): Flow<PagingData<LastFMSearchArtistAPIResponseModel.Artist>> {
+        return if (artist.isNullOrEmpty()) flow { emit(PagingData.empty()) } else {
             Pager(PagingConfig(pageSize = 20, initialLoadSize = 20)) {
                 SearchArtistsPagingResource(artist, remote)
-            }.flow.cachedIn(inScope).flowOn(ioDispatcher)
+            }.flow.flowOn(ioDispatcher)
+        }
     }
 
-    fun getArtistTopAlbumsPaged(artist: String?, inScope: CoroutineScope): Flow<PagingData<LastFMTopAlbumsAPIResponse.TopAlbum>> {
+    fun getArtistTopAlbumsPaged(artist: String?): Flow<PagingData<LastFMTopAlbumsAPIResponse.TopAlbum>> {
         return if (artist.isNullOrEmpty()) {
-            flow { PagingData.empty<LastFMTopAlbumsAPIResponse.TopAlbum>() }
+            flow { emit(PagingData.empty()) }
         } else {
             Pager(PagingConfig(pageSize = 20, initialLoadSize = 20)) {
                 TopAlbumsPagingResource(artist, remote)
-            }.flow.cachedIn(inScope).flowOn(ioDispatcher)
+            }.flow.flowOn(ioDispatcher)
         }
     }
 
-    suspend fun getAlbumDetail(album: String, artist: String): AlbumEntity {
-        return withContext(ioDispatcher) {
-            supervisorScope {
-                runCatching {
-                    local.getAlbum(album) ?: throw AlbumNotFoundInLocalDataException
-                }.recoverCatching {
-                    remoteToLocalMapper.mapAlbumResponseToAlbumEntity(remote.getAlbumInfo(album, artist).album).also { local.insertAlbum(it) }
-                }.getOrThrow()
+    suspend fun getAlbumDetail(album: String, artist: String): Flow<AlbumEntity> {
+        return flow {
+            val localAlbum = local.getAlbum(album)
+            val trueAlbum = if (localAlbum != null) {
+                localAlbum
+            } else {
+                val remoteAlbum = remote.getAlbumInfo(album, artist).album
+                val convertedAlbum = remoteToLocalMapper.mapAlbumResponseToAlbumEntity(remoteAlbum)
+                local.insertAlbum(convertedAlbum)
+                convertedAlbum
             }
-        }
+            emit(trueAlbum)
+        }.flowOn(ioDispatcher)
     }
 
-    fun getSavedAlbums(): Flow<List<AlbumEntity>> {
-        return local.getAllAlbums().flowOn(ioDispatcher)
+    fun getSavedAlbums(): Flow<PagingData<AlbumEntity>> {
+        return Pager(PagingConfig(pageSize = 20, initialLoadSize = 20)) {
+            local.getAllAlbums()
+        }.flow.flowOn(ioDispatcher)
     }
 
     suspend fun saveAlbum(album: LastFMAlbumInfoAPIResponseModel.AlbumDetail) {

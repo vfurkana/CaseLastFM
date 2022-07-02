@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StateView">
+        <attr name="emptyMessage" format="string" />
+        <attr name="errorMessage" format="string" />
+        <attr name="initialMessage" format="string" />
+        <attr name="progressMessage" format="string" />
+        <attr name="refreshMessage" format="string" />
+    </declare-styleable>
+</resources>

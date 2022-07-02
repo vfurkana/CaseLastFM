@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vfurkana.caselastfm.databinding.RowTopAlbumBinding
-import com.vfurkana.caselastfm.domain.model.ImageBySizeComparator
+import com.vfurkana.caselastfm.domain.model.Image
 import com.vfurkana.caselastfm.domain.model.TopAlbum
 
 class TopAlbumsRecyclerViewAdapter(val itemSelectListener: (TopAlbum) -> Unit) :
@@ -22,7 +22,7 @@ class TopAlbumsRecyclerViewAdapter(val itemSelectListener: (TopAlbum) -> Unit) :
                 binding.textViewAlbumName.text = album.name
                 binding.textViewUrl.text = album.url
                 binding.textViewArtistName.text = album.artistName
-                val largestImage = it.image.maxWith(ImageBySizeComparator)
+                val largestImage = it.image.maxWith(Image.ImageSize.ImageBySizeComparator)
                 Glide.with(itemView).load(largestImage.url).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(binding.imageViewAlbumImage)
             }
         }
