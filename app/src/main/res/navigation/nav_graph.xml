@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentSavedAlbums"
-        android:name="com.vfurkana.caselastfm.view.albumssaved.SavedAlbumsFragment"
+        android:name="com.vfurkana.savedalbums.view.SavedAlbumsFragment"
         android:label="Saved Albums"
         tools:layout="@layout/fragment_saved_albums">
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/fragmentArtistSearch"
-        android:name="com.vfurkana.caselastfm.view.artistsearch.ArtistSearchFragment"
+        android:name="com.vfurkana.artistsearch.view.ArtistSearchFragment"
         android:label="Search Artist"
         tools:layout="@layout/fragment_search_artist">
         <action
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/fragmentTopAlbums"
-        android:name="com.vfurkana.caselastfm.view.artisttopalbums.TopAlbumsFragment"
+        android:name="com.vfurkana.topalbums.view.TopAlbumsFragment"
         android:label="Top Albums"
         tools:layout="@layout/fragment_search_artist">
         <action

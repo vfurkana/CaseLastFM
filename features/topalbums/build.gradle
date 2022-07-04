@@ -1,0 +1,64 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 23
+        targetSdk 32
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation(project(":common"))
+
+    // App dependencies
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    // Using Hilt for Dependency injection
+    // (Because Dagger is almost industry standard even though I have other favourite.
+    // and Hilt helps to reduce boilerplate code over Dagger)
+    implementation "com.google.dagger:hilt-android:2.42"
+    kapt "com.google.dagger:hilt-compiler:2.42"
+    // For Concurrency
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
+    // Jetpack Things
+    // Fragment
+    implementation "androidx.fragment:fragment-ktx:1.4.1"
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
+    // We can benefit from paging on Database. Honestly, it's just to say "Hey! look I can use paging"
+    implementation "androidx.paging:paging-runtime:3.1.1"
+    // Glide for fetching and caching of images. Caching them in database wouldn't be smart, right?
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    // Navigation between screens
+    implementation "androidx.navigation:navigation-fragment-ktx:2.4.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.4.2"
+}

@@ -47,8 +47,11 @@ dependencies {
 
     implementation(project(":common"))
 
-    // TODO we only need this for navigation. can remove.
-    implementation(project(":albumdetail"))
+    // TODO only interfaces of navigation can be implemented instead of whole module
+    implementation(project(":features:albumdetail"))
+    implementation(project(":features:artistsearch"))
+    implementation(project(":features:savedalbums"))
+    implementation(project(":features:topalbums"))
 
     // App dependencies
     implementation 'androidx.core:core-ktx:1.8.0'

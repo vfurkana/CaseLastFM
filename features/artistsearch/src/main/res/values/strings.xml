@@ -1,0 +1,9 @@
+<resources>
+    <string name="Search_Here">Search Here</string>
+    <string name="Retry">Retry</string>
+    <string name="Generic_error">Something went wrong. Please try again later.</string>
+    <string name="Please_wait">Please Wait</string>
+    <string name="Refreshing">Refreshing</string>
+    <string name="Search_results_will_appear_here">Search results will appear here</string>
+    <string name="No_matching_result">No matching resuts found</string>
+</resources>

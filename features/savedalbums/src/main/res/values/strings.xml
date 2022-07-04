@@ -1,0 +1,7 @@
+<resources>
+    <string name="Saved_albums_will_appear_here">Saved albums will appear here.</string>
+    <string name="Generic_error">Something went wrong. Please try again later.</string>
+    <string name="Please_wait">Please Wait</string>
+    <string name="There_s_nothing_to_see_here">There\'s nothing to see here. \n \n (Yet?!)</string>
+    <string name="Refreshing">Refreshing</string>
+</resources>

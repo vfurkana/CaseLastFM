@@ -21,4 +21,5 @@ class MainActivity : AppCompatActivity() {
             it.navigateUp() || super.onSupportNavigateUp()
         } ?: super.onSupportNavigateUp()
     }
+
 }
