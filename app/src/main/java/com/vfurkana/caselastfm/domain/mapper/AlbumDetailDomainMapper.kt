@@ -18,7 +18,23 @@ object AlbumDetailDomainMapper {
                 )
             },
             albumEntity.tracks?.map {
-                Track(it.duration, it.url, it.name)
+                Track(it.duration, it.url, it.name, it.artistName)
+            }
+        )
+    }
+
+    fun mapAlbumDetailToEntity(album: Album): AlbumEntity {
+        return AlbumEntity(
+            album.name,
+            album.artistName,
+            album.image.map {
+                AlbumEntity.Image(
+                    it.url,
+                    it.size?.let { AlbumEntity.Image.Size.valueOf(it.name) },
+                )
+            },
+            album.tracks?.map {
+                AlbumEntity.Track(it.duration, it.url, it.name, it.artistName)
             }
         )
     }

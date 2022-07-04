@@ -36,7 +36,7 @@
         android:ellipsize="none"
         android:lines="1"
         android:textSize="@dimen/textSizeMedium"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/toggle_save"
         app:layout_constraintStart_toEndOf="@id/imageView_albumImage"
         app:layout_constraintTop_toBottomOf="@id/textView_albumName"
         tools:text="Super Cool Amazing Band" />
@@ -50,9 +50,18 @@
         android:ellipsize="none"
         android:lines="1"
         android:textSize="@dimen/textSizeSmall"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/toggle_save"
         app:layout_constraintStart_toEndOf="@id/imageView_albumImage"
         app:layout_constraintTop_toBottomOf="@id/textView_artistName"
         tools:text="Super Cool Amazing Band" />
+
+    <CheckBox
+        android:id="@+id/toggle_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="@string/Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

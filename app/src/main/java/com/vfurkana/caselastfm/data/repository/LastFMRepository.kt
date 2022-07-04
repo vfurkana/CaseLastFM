@@ -41,6 +41,12 @@ class LastFMRepository @Inject constructor(
         }
     }
 
+    suspend fun getArtistSavedAlbums(artist: String?): List<AlbumEntity> {
+        return withContext(ioDispatcher) {
+            artist?.let { local.getAlbumsByArtist(artist) } ?: listOf()
+        }
+    }
+
     suspend fun getAlbumDetail(album: String, artist: String): Flow<AlbumEntity> {
         return flow {
             val localAlbum = local.getAlbum(album)
@@ -49,11 +55,14 @@ class LastFMRepository @Inject constructor(
             } else {
                 val remoteAlbum = remote.getAlbumInfo(album, artist).album
                 val convertedAlbum = remoteToLocalMapper.mapAlbumResponseToAlbumEntity(remoteAlbum)
-                local.insertAlbum(convertedAlbum)
                 convertedAlbum
             }
             emit(trueAlbum)
         }.flowOn(ioDispatcher)
+    }
+
+    suspend fun getAlbumSaveStatus(album: String): Flow<Boolean> {
+        return local.getAlbumFlow(album).map { it.isNotEmpty() }.flowOn(ioDispatcher)
     }
 
     fun getSavedAlbums(): Flow<PagingData<AlbumEntity>> {
@@ -65,6 +74,26 @@ class LastFMRepository @Inject constructor(
     suspend fun saveAlbum(album: LastFMAlbumInfoAPIResponseModel.AlbumDetail) {
         return withContext(ioDispatcher) {
             local.insertAlbum(remoteToLocalMapper.mapAlbumResponseToAlbumEntity(album))
+        }
+    }
+
+    suspend fun saveAlbum(album: AlbumEntity) {
+        return withContext(ioDispatcher) {
+            local.insertAlbum(album)
+        }
+    }
+
+    suspend fun saveAlbum(album: String, artist: String) {
+        withContext(ioDispatcher) {
+            val remoteAlbum = remote.getAlbumInfo(album, artist)
+            val convertedAlbum = remoteToLocalMapper.mapAlbumResponseToAlbumEntity(remoteAlbum.album)
+            local.insertAlbum(convertedAlbum)
+        }
+    }
+
+    suspend fun removeAlbum(album: String) {
+        withContext(ioDispatcher) {
+            Log.i("furkooo", "rows removed: ${local.removeAlbum(album)}")
         }
     }
 

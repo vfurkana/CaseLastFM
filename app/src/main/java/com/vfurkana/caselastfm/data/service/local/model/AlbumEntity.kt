@@ -21,13 +21,13 @@ data class AlbumEntity(
     data class Image(
         val url: String,
         val size: Size?
-    )
-
-    enum class Size {
-        ExtraLarge,
-        Large,
-        Medium,
-        Mega,
-        Small;
+    ){
+        enum class Size {
+            ExtraLarge,
+            Large,
+            Medium,
+            Mega,
+            Small;
+        }
     }
 }

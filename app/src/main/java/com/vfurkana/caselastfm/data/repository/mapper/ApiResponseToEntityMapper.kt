@@ -12,7 +12,7 @@ object ApiResponseToEntityMapper {
             albumDetail.image.map {
                 AlbumEntity.Image(
                     it.url,
-                    it.size?.let { AlbumEntity.Size.valueOf(it.name) }
+                    it.size?.let { AlbumEntity.Image.Size.valueOf(it.name) }
                 )
             },
             albumDetail.tracks?.track?.map {

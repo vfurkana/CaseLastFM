@@ -12,4 +12,5 @@
     <string name="Search_results_will_appear_here">Search results will appear here</string>
     <string name="No_matching_result">No matching resuts found</string>
     <string name="Album_details_will_appear_here">Album details will appear here</string>
+    <string name="Save">Save</string>
 </resources>
