@@ -6,9 +6,9 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.vfurkana.caselastfm.common.domain.model.Album
 import com.vfurkana.caselastfm.databinding.RowAlbumBinding
-import com.vfurkana.caselastfm.domain.model.Album
-import com.vfurkana.caselastfm.domain.model.Image
+import com.vfurkana.caselastfm.common.domain.model.Image
 
 class SavedAlbumsRecyclerViewAdapter(val itemSelectListener: (Album) -> Unit) :
     PagingDataAdapter<Album, SavedAlbumsRecyclerViewAdapter.AlbumViewHolder>(

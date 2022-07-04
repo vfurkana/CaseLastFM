@@ -1,13 +1,12 @@
 package com.vfurkana.caselastfm.viewmodel.artistsearch
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.vfurkana.caselastfm.domain.model.Artist
+import com.vfurkana.caselastfm.common.domain.model.Artist
 import com.vfurkana.caselastfm.domain.usecase.ArtistSearchUseCase
-import com.vfurkana.caselastfm.view.common.ViewState
+import com.vfurkana.caselastfm.common.view.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

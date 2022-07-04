@@ -1,12 +1,11 @@
 package com.vfurkana.caselastfm.domain.mapper
 
-import com.vfurkana.caselastfm.data.service.remote.model.LastFMSearchArtistAPIResponseModel
-import com.vfurkana.caselastfm.domain.model.Artist
-import com.vfurkana.caselastfm.domain.model.Image
+import com.vfurkana.caselastfm.common.domain.model.Artist
+import com.vfurkana.caselastfm.common.domain.model.Image
 
 object ArtistDomainMapper {
 
-    fun mapArtistFromAPIResponse(artistApiResponse: LastFMSearchArtistAPIResponseModel.Artist): Artist {
+    fun mapArtistFromAPIResponse(artistApiResponse: com.vfurkana.caselastfm.common.data.service.remote.model.LastFMSearchArtistAPIResponseModel.Artist): Artist {
         return Artist(
             artistApiResponse.name,
             artistApiResponse.image.map {

@@ -26,7 +26,7 @@
         app:srcCompat="@drawable/icon_search"
         app:tint="@color/white" />
 
-    <com.vfurkana.caselastfm.view.common.StateView
+    <com.vfurkana.caselastfm.common.view.StateView
         android:id="@+id/stateView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

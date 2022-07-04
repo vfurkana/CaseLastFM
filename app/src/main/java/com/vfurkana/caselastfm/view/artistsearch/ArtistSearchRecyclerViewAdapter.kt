@@ -8,8 +8,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vfurkana.caselastfm.R
 import com.vfurkana.caselastfm.databinding.RowArtistBinding
-import com.vfurkana.caselastfm.domain.model.Artist
-import com.vfurkana.caselastfm.domain.model.Image
+import com.vfurkana.caselastfm.common.domain.model.Artist
+import com.vfurkana.caselastfm.common.domain.model.Image
 
 class ArtistSearchRecyclerViewAdapter(val itemSelectListener: (Artist) -> Unit) :
     PagingDataAdapter<Artist, ArtistSearchRecyclerViewAdapter.ArtistViewHolder>(

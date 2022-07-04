@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vfurkana.caselastfm.R
 import com.vfurkana.caselastfm.databinding.FragmentSearchArtistBinding
-import com.vfurkana.caselastfm.domain.model.Artist
+import com.vfurkana.caselastfm.common.domain.model.Artist
 import com.vfurkana.caselastfm.view.artisttopalbums.TopAlbumsFragment
-import com.vfurkana.caselastfm.view.common.BaseFragment
-import com.vfurkana.caselastfm.view.common.PagedRecyclerViewLoadStateAdapter
-import com.vfurkana.caselastfm.view.common.ViewState
+import com.vfurkana.caselastfm.common.view.BaseFragment
+import com.vfurkana.caselastfm.common.view.PagedRecyclerViewLoadStateAdapter
+import com.vfurkana.caselastfm.common.view.ViewState
 import com.vfurkana.caselastfm.viewmodel.artistsearch.ArtistSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job

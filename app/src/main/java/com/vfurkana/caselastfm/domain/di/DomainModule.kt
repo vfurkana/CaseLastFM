@@ -1,12 +1,12 @@
 package com.vfurkana.caselastfm.domain.di
 
-import com.vfurkana.caselastfm.data.repository.LastFMRepository
-import com.vfurkana.caselastfm.domain.mapper.AlbumDetailDomainMapper
+import com.vfurkana.caselastfm.common.data.repository.LastFMRepository
 import com.vfurkana.caselastfm.domain.mapper.ArtistDomainMapper
+import com.vfurkana.caselastfm.domain.mapper.SavedAlbumsDomainMapper
 import com.vfurkana.caselastfm.domain.mapper.TopAlbumDomainMapper
-import com.vfurkana.caselastfm.domain.usecase.AlbumDetailsUseCase
 import com.vfurkana.caselastfm.domain.usecase.ArtistSearchUseCase
 import com.vfurkana.caselastfm.domain.usecase.ArtistTopAlbumsUseCase
+import com.vfurkana.caselastfm.domain.usecase.SavedAlbumsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,8 +31,8 @@ class DomainModule {
 
     @Provides
     @ViewModelScoped
-    fun provideAlbumDetailMapper(): AlbumDetailDomainMapper {
-        return AlbumDetailDomainMapper
+    fun provideSavedAlbumsDomainMapper(): SavedAlbumsDomainMapper {
+        return SavedAlbumsDomainMapper
     }
 
     @Provides
@@ -49,7 +49,7 @@ class DomainModule {
 
     @Provides
     @ViewModelScoped
-    fun provideAlbumDetailUseCase(lastFMRepository: LastFMRepository, albumDetailDomainMapper: AlbumDetailDomainMapper): AlbumDetailsUseCase {
-        return AlbumDetailsUseCase(lastFMRepository, albumDetailDomainMapper)
+    fun provideSavedAlbumsUseCase(lastFMRepository: LastFMRepository, savedAlbumsDomainMapper: SavedAlbumsDomainMapper): SavedAlbumsUseCase {
+        return SavedAlbumsUseCase(lastFMRepository, savedAlbumsDomainMapper)
     }
 }

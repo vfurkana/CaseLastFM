@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "CaseLastFM"
 include ':app'
+include ':albumdetail'
+include ':common'

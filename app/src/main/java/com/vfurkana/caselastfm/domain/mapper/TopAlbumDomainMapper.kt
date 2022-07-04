@@ -1,12 +1,11 @@
 package com.vfurkana.caselastfm.domain.mapper
 
-import com.vfurkana.caselastfm.data.service.remote.model.LastFMTopAlbumsAPIResponse
-import com.vfurkana.caselastfm.domain.model.Image
-import com.vfurkana.caselastfm.domain.model.TopAlbum
+import com.vfurkana.caselastfm.common.domain.model.Image
+import com.vfurkana.caselastfm.common.domain.model.TopAlbum
 
 object TopAlbumDomainMapper {
 
-    fun mapTopAlbumFromAPIResponse(albumApiResponse: LastFMTopAlbumsAPIResponse.TopAlbum): TopAlbum {
+    fun mapTopAlbumFromAPIResponse(albumApiResponse: com.vfurkana.caselastfm.common.data.service.remote.model.LastFMTopAlbumsAPIResponse.TopAlbum): TopAlbum {
         return TopAlbum(
             albumApiResponse.name,
             albumApiResponse.url,

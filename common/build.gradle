@@ -1,0 +1,78 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+}
+
+
+
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 23
+        targetSdk 32
+
+        def localProperties = new Properties()
+        localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+        buildConfigField("String", "LAST_FM_API_KEY", localProperties["lastFMApiKey"])
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+
+    // Using Retrofit for network requests. (Because Jake Wharton is cool)
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    // Need interceptor. But okhttp won't hurt as well. 5.0.0-alpha available, but thanks, no alpha please.
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    // No need to hassle with request parsing. Gson will work for now. Converter factory is for combining with Retrofit.
+    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // Using Hilt for Dependency injection
+    // (Because Dagger is almost industry standard even though I have other favourite.
+    // and Hilt helps to reduce boilerplate code over Dagger)
+    implementation "com.google.dagger:hilt-android:2.42"
+    kapt "com.google.dagger:hilt-compiler:2.42"
+
+    // For Concurrency
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
+
+
+    // For storing & caching api responses in database so we can work offline.
+    implementation "androidx.room:room-runtime:2.4.2"
+    implementation "androidx.room:room-ktx:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
+
+    // We can benefit from paging on Database. Honestly, it's just to say "Hey! look I can use paging"
+    implementation "androidx.paging:paging-runtime:3.1.1"
+    implementation "androidx.room:room-paging:2.4.2"
+}

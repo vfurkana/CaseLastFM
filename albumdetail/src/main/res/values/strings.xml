@@ -1,0 +1,8 @@
+<resources>
+    <string name="Generic_error">Something went wrong. Please try again later.</string>
+    <string name="Please_wait">Please Wait</string>
+    <string name="There_s_nothing_to_see_here">There\'s nothing to see here. \n \n (Yet?!)</string>
+    <string name="Refreshing">Refreshing</string>
+    <string name="Album_details_will_appear_here">Album details will appear here</string>
+    <string name="Save">Save</string>
+</resources>

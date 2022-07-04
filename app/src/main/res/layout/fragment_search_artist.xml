@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.vfurkana.caselastfm.view.common.StateView
+    <com.vfurkana.caselastfm.common.view.StateView
         android:id="@+id/stateView"
         android:layout_width="match_parent"
         android:layout_height="0dp"

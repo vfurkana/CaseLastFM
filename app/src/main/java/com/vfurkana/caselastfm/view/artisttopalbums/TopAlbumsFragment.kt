@@ -13,12 +13,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vfurkana.caselastfm.R
 import com.vfurkana.caselastfm.databinding.FragmentTopAlbumsBinding
-import com.vfurkana.caselastfm.domain.model.Artist
-import com.vfurkana.caselastfm.domain.model.TopAlbum
-import com.vfurkana.caselastfm.view.albumdetail.AlbumDetailFragment
-import com.vfurkana.caselastfm.view.common.BaseFragment
-import com.vfurkana.caselastfm.view.common.PagedRecyclerViewLoadStateAdapter
-import com.vfurkana.caselastfm.view.common.ViewState
+import com.vfurkana.caselastfm.common.domain.model.Artist
+import com.vfurkana.caselastfm.common.domain.model.TopAlbum
+import com.vfurkana.caselastfm.common.view.BaseFragment
+import com.vfurkana.caselastfm.common.view.PagedRecyclerViewLoadStateAdapter
+import com.vfurkana.caselastfm.common.view.ViewState
 import com.vfurkana.caselastfm.viewmodel.artisttopalbums.ArtistTopAlbumsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -79,7 +78,8 @@ class TopAlbumsFragment : BaseFragment<FragmentTopAlbumsBinding>() {
     }
 
     private fun onItemClick(album: TopAlbum) {
-        findNavController().navigate(R.id.action_top_albums_to_detail, bundleOf(AlbumDetailFragment.KEY_EXTRAS_TOP_ALBUM to album))
+        // TODO FIX THIS EXTRAS
+        findNavController().navigate(R.id.action_top_albums_to_detail, bundleOf("EXTRAS_TOP_ALBUM" to album))
     }
 
     private fun onSaveClick(position: Int, album: TopAlbum, isSave: Boolean) {

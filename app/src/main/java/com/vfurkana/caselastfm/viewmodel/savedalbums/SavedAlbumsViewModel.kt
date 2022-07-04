@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.vfurkana.caselastfm.domain.model.Album
+import com.vfurkana.caselastfm.common.domain.model.Album
+import com.vfurkana.caselastfm.common.view.ViewState
 import com.vfurkana.caselastfm.domain.usecase.SavedAlbumsUseCase
-import com.vfurkana.caselastfm.view.common.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

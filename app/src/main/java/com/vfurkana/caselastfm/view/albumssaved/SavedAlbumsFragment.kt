@@ -1,7 +1,6 @@
 package com.vfurkana.caselastfm.view.albumssaved
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +12,11 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vfurkana.caselastfm.R
+import com.vfurkana.caselastfm.common.domain.model.Album
 import com.vfurkana.caselastfm.databinding.FragmentSavedAlbumsBinding
-import com.vfurkana.caselastfm.domain.model.Album
-import com.vfurkana.caselastfm.view.albumdetail.AlbumDetailFragment
-import com.vfurkana.caselastfm.view.common.BaseFragment
-import com.vfurkana.caselastfm.view.common.PagedRecyclerViewLoadStateAdapter
-import com.vfurkana.caselastfm.view.common.ViewState
+import com.vfurkana.caselastfm.common.view.BaseFragment
+import com.vfurkana.caselastfm.common.view.PagedRecyclerViewLoadStateAdapter
+import com.vfurkana.caselastfm.common.view.ViewState
 import com.vfurkana.caselastfm.viewmodel.savedalbums.SavedAlbumsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -67,6 +65,7 @@ class SavedAlbumsFragment : BaseFragment<FragmentSavedAlbumsBinding>() {
     }
 
     private fun onItemClick(album: Album) {
-        findNavController().navigate(R.id.action_saved_to_detail, bundleOf(AlbumDetailFragment.KEY_EXTRAS_ALBUM to album))
+        // TODO FIX THIS EXTRAS
+        findNavController().navigate(R.id.action_saved_to_detail, bundleOf("EXTRAS_ALBUM" to album))
     }
 }
