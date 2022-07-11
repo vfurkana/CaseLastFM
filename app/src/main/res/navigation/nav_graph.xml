@@ -10,12 +10,6 @@
         android:name="com.vfurkana.savedalbums.view.SavedAlbumsFragment"
         android:label="Saved Albums"
         tools:layout="@layout/fragment_saved_albums">
-        <action
-            android:id="@+id/action_saved_to_detail"
-            app:destination="@id/fragmentAlbumDetail" />
-        <action
-            android:id="@+id/action_saved_to_search"
-            app:destination="@id/fragmentArtistSearch" />
     </fragment>
 
     <fragment
@@ -23,9 +17,6 @@
         android:name="com.vfurkana.artistsearch.view.ArtistSearchFragment"
         android:label="Search Artist"
         tools:layout="@layout/fragment_search_artist">
-        <action
-            android:id="@+id/action_search_to_top_albums"
-            app:destination="@id/fragmentTopAlbums" />
     </fragment>
 
     <fragment
@@ -33,9 +24,6 @@
         android:name="com.vfurkana.topalbums.view.TopAlbumsFragment"
         android:label="Top Albums"
         tools:layout="@layout/fragment_search_artist">
-        <action
-            android:id="@+id/action_top_albums_to_detail"
-            app:destination="@id/fragmentAlbumDetail" />
     </fragment>
 
     <fragment

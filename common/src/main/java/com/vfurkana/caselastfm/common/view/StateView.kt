@@ -2,12 +2,14 @@ package com.vfurkana.caselastfm.common.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.vfurkana.caselastfm.common.R
 import com.vfurkana.caselastfm.common.databinding.LayoutStateViewBinding
+import kotlin.math.log
 
 class StateView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -39,6 +41,7 @@ class StateView @JvmOverloads constructor(
     }
 
     fun <T> updateWithViewState(viewState: ViewState<T>) {
+        Log.i("furkooo", "viewstate is updated with ${viewState}")
         when (viewState) {
             is ViewState.Empty -> {
                 binding.viewBlocking.isGone = true
@@ -80,5 +83,11 @@ class StateView @JvmOverloads constructor(
                 binding.textViewMessage.isGone = true
             }
         }
+    }
+
+    fun showContent() {
+        binding.viewBlocking.isGone = true
+        binding.progressBar.isGone = true
+        binding.textViewMessage.isGone = true
     }
 }

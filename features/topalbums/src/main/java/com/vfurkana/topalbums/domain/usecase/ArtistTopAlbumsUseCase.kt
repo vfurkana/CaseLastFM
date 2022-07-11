@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ArtistTopAlbumsUseCase @Inject constructor(
-    val lastFMRepository: com.vfurkana.caselastfm.common.data.repository.LastFMRepository,
+    private val lastFMRepository: com.vfurkana.caselastfm.common.data.repository.LastFMRepository,
     private val topAlbumsDomainMapper: com.vfurkana.topalbums.domain.mapper.TopAlbumDomainMapper
 ) {
 
@@ -18,14 +18,11 @@ class ArtistTopAlbumsUseCase @Inject constructor(
                 val artistAlbums = lastFMRepository.getArtistSavedAlbums(query)
                 it.map {
                     topAlbumsDomainMapper.mapTopAlbumFromAPIResponse(it).apply {
-                        if (artistAlbums.any { it.albumName == name }) {
-                            isSaved = true
-                        }
+                        isSaved = artistAlbums.any { it.albumName == name }
                     }
                 }
             }
     }
-
 
     suspend fun saveAlbum(album: String, artist: String) {
         lastFMRepository.saveAlbum(album, artist)

@@ -44,12 +44,6 @@ class TopAlbumsFragment : BaseFragment<FragmentTopAlbumsBinding>() {
         viewBinding?.recyclerViewTopAlbums?.adapter =
             recyclerViewAdapter.withLoadStateFooter(PagedRecyclerViewLoadStateAdapter(this@TopAlbumsFragment::retry))
         viewBinding?.recyclerViewTopAlbums?.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
-        recyclerViewAdapter.addLoadStateListener { loadState ->
-            if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && recyclerViewAdapter.itemCount < 1) {
-                viewBinding?.stateView?.updateWithViewState(ViewState.Empty())
-            }
-            (loadState.refresh as? LoadState.Error)?.let { viewBinding?.stateView?.updateWithViewState(ViewState.Error(it.error)) }
-        }
 
         arguments?.getParcelable<Artist>(KEY_EXTRAS_ARTIST)?.let {
             initializeForArtist(it.name)
@@ -61,6 +55,18 @@ class TopAlbumsFragment : BaseFragment<FragmentTopAlbumsBinding>() {
         currentJob?.cancel()
         currentJob = null
         currentJob = lifecycleScope.launch {
+            launch {
+                recyclerViewAdapter.loadStateFlow.collectLatest { loadState ->
+                    if (loadState.refresh is LoadState.Loading) {
+                        viewBinding?.stateView?.updateWithViewState(ViewState.Progress)
+                    } else if (loadState.refresh is LoadState.NotLoading) {
+                        viewBinding?.stateView?.showContent()
+                    } else if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && recyclerViewAdapter.itemCount < 1) {
+                        viewBinding?.stateView?.updateWithViewState(ViewState.Empty())
+                    }
+                    (loadState.refresh as? LoadState.Error)?.let { viewBinding?.stateView?.updateWithViewState(ViewState.Error(it.error)) }
+                }
+            }
             launch {
                 viewModel.getTopAlbumsForArtist((artistName))
             }
