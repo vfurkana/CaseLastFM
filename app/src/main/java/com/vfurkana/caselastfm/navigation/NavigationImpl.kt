@@ -2,6 +2,8 @@ package com.vfurkana.caselastfm.navigation
 
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import com.vfurkana.artistsearch.navigation.ArtistSearchNavigations
 import com.vfurkana.caselastfm.R
 import com.vfurkana.caselastfm.albumdetail.view.AlbumDetailFragment
@@ -23,7 +25,11 @@ class NavigationImpl @Inject constructor(private val navigationController: NavCo
     }
 
     override fun navigateToDetail(album: TopAlbum) {
-        navigationController?.navigate(R.id.fragmentAlbumDetail, bundleOf(AlbumDetailFragment.KEY_EXTRAS_TOP_ALBUM to album))
+        navigationController?.navigate(
+            R.id.fragmentAlbumDetail,
+            bundleOf(AlbumDetailFragment.KEY_EXTRAS_TOP_ALBUM to album),
+            NavOptions.Builder().setRestoreState(true).build()
+        )
     }
 
     override fun navigateToSearch() {
@@ -31,6 +37,8 @@ class NavigationImpl @Inject constructor(private val navigationController: NavCo
     }
 
     override fun navigateToTopAlbums(artist: Artist) {
-        navigationController?.navigate(R.id.fragmentTopAlbums, bundleOf(TopAlbumsFragment.KEY_EXTRAS_ARTIST to artist))
+        navigationController?.navigate(
+            R.id.fragmentTopAlbums, bundleOf(TopAlbumsFragment.KEY_EXTRAS_ARTIST to artist), NavOptions.Builder().setRestoreState(true).build()
+        )
     }
 }

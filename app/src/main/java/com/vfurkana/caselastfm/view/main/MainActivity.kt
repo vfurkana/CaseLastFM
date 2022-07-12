@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment)?.navController?.let {
-            it.navigateUp() || super.onSupportNavigateUp()
+            it.popBackStack()
         } ?: super.onSupportNavigateUp()
     }
 

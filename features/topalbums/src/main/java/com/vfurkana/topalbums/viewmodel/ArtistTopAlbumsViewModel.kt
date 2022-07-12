@@ -12,22 +12,28 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ArtistTopAlbumsViewModel @Inject constructor(private val topAlbumsUseCase: com.vfurkana.topalbums.domain.usecase.ArtistTopAlbumsUseCase) : ViewModel() {
+class ArtistTopAlbumsViewModel @Inject constructor(private val topAlbumsUseCase: com.vfurkana.topalbums.domain.usecase.ArtistTopAlbumsUseCase) :
+    ViewModel() {
 
-    private val topAlbumsFlowInner: MutableSharedFlow<ViewState<PagingData<TopAlbum>>> = MutableStateFlow(ViewState.Initial())
-    val topAlbumsFlow: Flow<ViewState<PagingData<TopAlbum>>> = topAlbumsFlowInner
+    private val artistToSearchFlow: MutableSharedFlow<String> = MutableSharedFlow()
+    val topAlbumsFlow: Flow<ViewState<PagingData<TopAlbum>>> =
+        artistToSearchFlow
+            .filterNot { it.isNullOrEmpty() }
+            .transform {
+                topAlbumsUseCase.getTopAlbumsPaged(it)
+                    .cachedIn(viewModelScope)
+                    .map<PagingData<TopAlbum>, ViewState<PagingData<TopAlbum>>> { ViewState.Success(it) }
+                    .onStart { emit(ViewState.Progress) }
+                    .onEmpty { emit(ViewState.Empty()) }
+                    .catch { emit(ViewState.Error(it)) }
+                    .collect(this)
+            }.shareIn(viewModelScope, SharingStarted.Eagerly)
 
     val albumSaveStatus = MutableSharedFlow<Pair<Int, ViewState<TopAlbum>>>()
 
     fun getTopAlbumsForArtist(artist: String) {
         viewModelScope.launch {
-            topAlbumsUseCase.getTopAlbumsPaged(artist)
-                .cachedIn(viewModelScope)
-                .onStart { ViewState.Progress }
-                .onEmpty { ViewState.Empty() }
-                .map { ViewState.Success(it) }
-                .catch { ViewState.Error(it) }
-                .collect(topAlbumsFlowInner)
+            artistToSearchFlow.emit(artist)
         }
     }
 
