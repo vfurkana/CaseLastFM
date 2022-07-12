@@ -13,4 +13,8 @@ class SavedAlbumsUseCase @Inject constructor(val lastFMRepository: LastFMReposit
     suspend fun getSavedAlbums(): Flow<PagingData<Album>> {
         return lastFMRepository.getSavedAlbums().map { it.map { domainMapper.mapAlbumDetailFromEntity(it) } }
     }
+
+    suspend fun removeAlbum(album: String) {
+        lastFMRepository.removeAlbum(album)
+    }
 }

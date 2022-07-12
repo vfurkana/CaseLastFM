@@ -25,4 +25,8 @@ class SavedAlbumsViewModel @Inject constructor(private val savedAlbumsUseCase: S
             .catch { emit(ViewState.Error(it)) }
             .collect(this)
     }
+
+    suspend fun unSaveAlbum(album: Album, position: Int) {
+        savedAlbumsUseCase.removeAlbum(album.name)
+    }
 }

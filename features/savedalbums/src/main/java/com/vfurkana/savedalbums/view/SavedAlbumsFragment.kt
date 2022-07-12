@@ -26,9 +26,9 @@ import javax.inject.Inject
 class SavedAlbumsFragment : BaseFragment<FragmentSavedAlbumsBinding>() {
 
     val viewModel: SavedAlbumsViewModel by viewModels()
-    private val recyclerViewAdapter = SavedAlbumsRecyclerViewAdapter(::navigateToDetail)
+    private val recyclerViewAdapter = SavedAlbumsRecyclerViewAdapter(::navigateToDetail, ::onUnSaveClick)
 
-    @Inject lateinit var navigator : SavedAlbumsNavigations
+    @Inject lateinit var navigator: SavedAlbumsNavigations
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?, attachToRoot: Boolean): FragmentSavedAlbumsBinding {
         return FragmentSavedAlbumsBinding.inflate(inflater, container, attachToRoot)
@@ -62,6 +62,12 @@ class SavedAlbumsFragment : BaseFragment<FragmentSavedAlbumsBinding>() {
                     recyclerViewAdapter.submitData(it.data)
                 }
             }
+        }
+    }
+
+    private fun onUnSaveClick(position: Int, album: Album) {
+        lifecycleScope.launch {
+            viewModel.unSaveAlbum(album, position)
         }
     }
 
