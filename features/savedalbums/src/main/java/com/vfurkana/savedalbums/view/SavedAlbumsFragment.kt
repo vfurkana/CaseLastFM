@@ -65,9 +65,9 @@ class SavedAlbumsFragment : BaseFragment<FragmentSavedAlbumsBinding>() {
         }
     }
 
-    private fun onUnSaveClick(position: Int, album: Album) {
+    private fun onUnSaveClick(album: Album) {
         lifecycleScope.launch {
-            viewModel.unSaveAlbum(album, position)
+            viewModel.unSaveAlbum(album)
         }
     }
 

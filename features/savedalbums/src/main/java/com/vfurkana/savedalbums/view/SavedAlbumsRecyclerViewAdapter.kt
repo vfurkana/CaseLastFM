@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 class SavedAlbumsRecyclerViewAdapter(
     val itemSelectListener: (Album) -> Unit,
-    val unSaveClickListener: (position: Int, album: Album) -> Unit
+    val unSaveClickListener: (album: Album) -> Unit
 ) :
     PagingDataAdapter<Album, SavedAlbumsRecyclerViewAdapter.AlbumViewHolder>(
         AlbumDiffCallback
@@ -42,7 +42,7 @@ class SavedAlbumsRecyclerViewAdapter(
                             binding.buttonRemove.text = it.toString()
                         }
                     binding.buttonRemove.isEnabled = false;
-                    unSaveClickListener(position, album)
+                    unSaveClickListener(album)
                 }
             } else {
                 lastCountDownJob?.cancel()
