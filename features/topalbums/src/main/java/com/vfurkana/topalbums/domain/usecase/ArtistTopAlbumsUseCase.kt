@@ -18,9 +18,7 @@ class ArtistTopAlbumsUseCase @Inject constructor(
                 val artistAlbums = lastFMRepository.getArtistSavedAlbums(query)
                 it.map {
                     topAlbumsDomainMapper.mapTopAlbumFromAPIResponse(it).apply {
-                        if (artistAlbums.any { it.albumName == name }) {
-                            isSaved = true
-                        }
+                        isSaved = artistAlbums.any { it.albumName == name }
                     }
                 }
             }

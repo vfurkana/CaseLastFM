@@ -19,6 +19,7 @@ class ArtistTopAlbumsViewModel @Inject constructor(private val topAlbumsUseCase:
     val topAlbumsFlow: Flow<ViewState<PagingData<TopAlbum>>> =
         artistToSearchFlow
             .filterNot { it.isNullOrEmpty() }
+            .distinctUntilChanged()
             .transform {
                 topAlbumsUseCase.getTopAlbumsPaged(it)
                     .cachedIn(viewModelScope)
